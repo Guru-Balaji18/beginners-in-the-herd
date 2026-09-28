@@ -1,0 +1,5 @@
+# large downloaded / generated data (rebuildable from the scripts)
+data/
+__pycache__/
+*.pyc
+.claude/
