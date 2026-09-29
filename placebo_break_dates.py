@@ -29,8 +29,11 @@ ONE_SIDED_CRIT = -1.645
 def fit_drop_empty(y, X):
     """Some fake dates leave an interaction cell empty (e.g. no Post x Low
     days); a column of zeros can't be estimated, so it's dropped and that
-    coefficient reported as missing."""
+    coefficient reported as missing. Likewise, before 2018-04 there are no
+    pre-period Low days, so Rm^2 x Post x Low duplicates Rm^2 x Low; the
+    duplicate (later) column is dropped and Post x Low reported as missing."""
     X = X.loc[:, (X != 0).any(axis=0)]
+    X = X.loc[:, ~X.T.duplicated()]
     return mr.fit(y, X)
 
 
@@ -70,8 +73,15 @@ def estimate(df, ctrl, break_date, extra_ctrl=None, slope_by_year=False):
             X = X.join(yrs.mul(base, axis=0).add_prefix("slope_"))
         res = fit_drop_empty(d["csad"] if test == "cck" else d["scsad"], X)
         g5, g7 = mr.key_terms("dummy", test)
-        for name, term in [("g5", g5), ("g7", g7)]:
-            coef, se, p = mr.summarize_term(res, term)
+        for name, term, grp in [("g5", g5, "high"), ("g7", g7, "low")]:
+            # Post x group is only identified if the group and its complement
+            # both appear before and after the break (at 2017-06-30 every
+            # pre-period day is High, so g5 is a linear combination of others).
+            cells = pd.crosstab(d["post"], d[grp]).reindex(index=[0, 1], columns=[0, 1], fill_value=0)
+            if (cells.values == 0).any():
+                coef, se, p = np.nan, np.nan, np.nan
+            else:
+                coef, se, p = mr.summarize_term(res, term)
             out.update({f"{test}_{name}": coef, f"{test}_{name}_se": se, f"{test}_{name}_p": p,
                         f"{test}_{name}_t": coef / se if se else np.nan})
     return out
@@ -130,12 +140,28 @@ def figures(plac, real):
     RES_DIR.mkdir(exist_ok=True)
     names = {"cck": "Standard CCK", "wh": "Wang-Hudson (ours)"}
 
+    # Axis range covers the well-identified dates (from 2018-04, once the
+    # pre-period has Low days); the few 2017 dates with barely any pre-period
+    # contrast are still counted in every statistic, just drawn off-scale.
+    core = plac[plac["break_date"] >= "2018-04-01"]
+
+    def span(lo, hi):
+        pad = 0.08 * (hi - lo)
+        return lo - pad, hi + pad
+
     fig, axes = plt.subplots(1, 2, figsize=(11, 4))
     for ax, t in zip(axes, ["cck", "wh"]):
-        ax.hist(plac[f"{t}_g5"].dropna(), bins=25, color="0.7", edgecolor="white")
+        g = plac[f"{t}_g5"].dropna()
+        lo, hi = span(min(core[f"{t}_g5"].min(), real[f"{t}_g5"], 0), max(core[f"{t}_g5"].max(), 0))
+        off = int(((g < lo) | (g > hi)).sum())
+        ax.hist(g.clip(lo, hi), bins=np.linspace(lo, hi, 26), color="0.7", edgecolor="white")
+        ax.set_xlim(lo, hi)
+        if off:
+            ax.text(0.98, 0.80, f"{off} early-2017 date(s) off-scale," + chr(10) + "shown at the edge", transform=ax.transAxes,
+                    ha="right", fontsize=7, color="0.35")
         ax.axvline(real[f"{t}_g5"], color="#d62728", lw=2, label="real date (2022-11-30)")
         ax.axvline(0, color="0.3", lw=0.8, ls=":")
-        pct = (plac[f"{t}_g5"] <= real[f"{t}_g5"]).mean()
+        pct = (plac[f"{t}_g5"].dropna() <= real[f"{t}_g5"]).mean()
         ax.set_title(f"{names[t]}: real g5 more negative than {1 - pct:.0%} of fake dates", fontsize=10)
         ax.set_xlabel("g5 (Post x High) at fake break dates")
         ax.legend(fontsize=8)
@@ -156,7 +182,12 @@ def figures(plac, real):
                    color="#d62728", alpha=0.07)
         ax.axhline(0, color="0.3", lw=0.8, ls=":")
         ax.set_ylabel(f"g5, {names[t]}")
-        ax.legend(fontsize=8, loc="best")
+        lo, hi = span((core[f"{t}_g5"] - 1.96 * core[f"{t}_g5_se"]).min(),
+                      (core[f"{t}_g5"] + 1.96 * core[f"{t}_g5_se"]).max())
+        ax.set_ylim(lo, hi)
+        ax.legend(fontsize=8, loc="lower right")
+    axes[0].text(0.01, 0.04, "2017 dates with few pre-period days run off-scale (very wide CIs)",
+                 transform=axes[0].transAxes, fontsize=7, color="0.35")
     axes[1].set_xlabel("break date used as the 'ChatGPT date'")
     fig.suptitle("g5 when the ChatGPT date is moved to fake month-ends")
     fig.tight_layout()
@@ -180,10 +211,11 @@ def main():
 
     summary = {"n_placebo_dates": len(plac), "real": real}
     for t in ["cck", "wh"]:
-        g = plac[f"{t}_g5"]
+        g = plac[f"{t}_g5"].dropna()
+        summary[f"{t}_n_identified_g5"], summary[f"{t}_n_identified_g7"] = int(len(g)), int(plac[f"{t}_g7"].notna().sum())
         summary[f"{t}_empirical_p"] = float((g <= real[f"{t}_g5"]).mean())
-        summary[f"{t}_share_placebo_neg_sig"] = float((plac[f"{t}_g5_t"] < ONE_SIDED_CRIT).mean())
-        summary[f"{t}_share_placebo_g7_neg_sig"] = float((plac[f"{t}_g7_t"] < ONE_SIDED_CRIT).mean())
+        summary[f"{t}_share_placebo_neg_sig"] = float((plac[f"{t}_g5_t"].dropna() < ONE_SIDED_CRIT).mean())
+        summary[f"{t}_share_placebo_g7_neg_sig"] = float((plac[f"{t}_g7_t"].dropna() < ONE_SIDED_CRIT).mean())
         summary[f"{t}_decision"] = ("effect NOT specific to ChatGPT's release" if summary[f"{t}_empirical_p"] > 0.05
                                     else "real date more extreme than 95% of placebo dates")
 

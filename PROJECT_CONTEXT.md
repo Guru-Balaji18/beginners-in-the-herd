@@ -544,6 +544,43 @@ list the deviations from the Aug-31 plan: Robinhood excluded,
 expanding cutoffs, growth rates, Low_t term added, Wang-Hudson version
 added, entry measured in the 52 weeks before ChatGPT for Step 4.
 
+### Parts A-D of the 2026-09-28 addendum — DONE (see docs/addendum_2026-09-28.md, docs/deviations_log.md D1-D4)
+- **Part B, Monte Carlo** (`simulate_herding_tests.py`, 80,000 simulated markets,
+  outputs in `results/sim_*`):
+  - **Wang-Hudson (our implementation):** says "herding" in 100% of
+    no-herding markets in every scenario. The real WH t = -8.27 is at the
+    50th percentile of the S5 null, so it is not evidence of herding.
+  - **CCK:**
+    - S5 is conservative (0.1% false alarms) and low-powered at the
+      best-matching cell (S5, kappa=3, about 4%).
+    - The registered pooled winsorization makes CCK false-alarm 97-100%
+      when betas are equal.
+    - Power is non-monotonic, and the sign check fails at kappa=3000.
+  - **D3, the Post interactions:** null t-stats have SD 2-3 instead of 1.
+    One-sided false alarms are 15% (CCK) and 34% (WH). The real g5 t
+    (-1.62 CCK, -2.80 WH) is at the 15th/20th percentile of that null.
+- **Part C, placebo break dates** (`placebo_break_dates.py`, 85 fake
+  month-ends, `results/placebo_*`, `results/partC_summary.json`):
+  - The real g5 is at empirical p = 0.43 (CCK) and 0.70 (WH).
+  - 43% (CCK) and 89% (WH) of fake dates give a "significant" negative g5.
+  - Decision rule: the effect is **not specific to ChatGPT's release**,
+    in both tests.
+  - g5 is nearly identical for any break from 2022-04 to 2024-10, because
+    the High days sit in 2025-26.
+- **Year fixed effects:**
+  - Levels leave g5 unchanged.
+  - Year-specific Rm^2 / Rm^3 slopes: CCK g5 -2.94 (p .27), WH -132 (p .39).
+  - Decision: g5 is driven by between-year differences (calendar
+    confound).
+  - Within-year share of High variation: 49% overall, 69% of post days.
+    For Low: 44% / 36%.
+- **Part D, plan-literal High vs Low:**
+  - CCK g5 +2.43 (one-sided p .93); WH +268 (one-sided p .996). Both
+    are opposite to H1.
+- **Holm across the 8 tests:** only WH year-FE-levels survives (0.021).
+  That test is itself undermined by Part B, where WH's Post terms
+  over-reject.
+
 ### Not yet started
 - Deciding on the per-stock Google Trends component (see Step 4)
 - `data/csad.csv` / `robustness_wang_hudson.py` standalone outputs are
@@ -551,8 +588,8 @@ added, entry measured in the 52 weeks before ChatGPT for Step 4.
   from the final panel, so these files are superseded rather than needed.
 - Deciding how to handle the Yahoo delisted-data gap (see Step 1 finding
   above) before treating any regression result as meaningful
-- Step 6: remaining robustness/placebo tests (break-date tests,
-  bootstrap, international comparison, etc.)
+- Step 6: remaining robustness tests (international comparison, etc.);
+  break-date placebo and simulation done (see above)
 - Step 7: documentation/versioning
 
 ## Files in this handoff

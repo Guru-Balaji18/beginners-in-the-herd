@@ -110,3 +110,34 @@ Neither real g5 is unusual compared with what these tests produce when
 nothing changes at the break date. This does not change any registered
 decision. Part C, the placebo break-date test, is the registered check
 of the same question on real data.
+
+## D4 — 2026-09-28: identification rule in Part C (a code fix, found on the first run)
+
+**What happened.** On the first run of `placebo_break_dates.py`, 20
+regressions returned statsmodels "rank-deficient" warnings: 10
+early fake dates x 2 tests. The cause is the expanding tercile cutoffs.
+Before 2018-04 there are no Low days in the pre-period, and at 2017-06-30
+every pre-period day is High. That makes some regressors exact linear
+combinations of others:
+- Rm^2 x Post x Low duplicates Rm^2 x Low (2017-06..2018-03), so
+  Post x Low (g7) is not identified at these dates;
+- at 2017-06-30, Rm^2 - Rm^2 x Post - Rm^2 x High + Rm^2 x Post x High
+  = 0, so g5 is not identified at that date either.
+
+statsmodels quietly returned pseudo-inverse values for these
+coefficients, which are arbitrary numbers.
+
+**Fix.** A Post x group coefficient is reported as missing whenever one
+of its four cells is empty: pre/post x in-group/not-in-group. Duplicate
+columns are dropped before fitting. The empirical p and the shares are
+computed over the identified dates: g5 at 84 of 85 dates, g7 at 74 of 85.
+
+**Effect.** Negligible. The CCK empirical p moved 0.424 -> 0.429 and the
+Wang-Hudson one 0.694 -> 0.702. Decisions are unchanged. The real-date
+estimate (the reproduction assert) and the year-FE and plan-literal fits
+were never affected.
+
+**Figures.** The axes are zoomed to the dates from 2018-04 on. The one
+2017-07-31 point, which rests on only 10 non-High pre-period days,
+is drawn at the edge and noted on the chart. It is still counted in all
+statistics.

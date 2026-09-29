@@ -1,0 +1,123 @@
+{
+ "n_placebo_dates": 85,
+ "real": {
+  "cck_g5": -3.987647490402781,
+  "cck_g5_se": 2.469307625108146,
+  "cck_g5_p": 0.10633563221179823,
+  "cck_g5_t": -1.6148848567331249,
+  "cck_g7": -6.148260825827083,
+  "cck_g7_se": 2.8434233030165994,
+  "cck_g7_p": 0.030597047755655058,
+  "cck_g7_t": -2.1622741922753352,
+  "wh_g5": -430.53639191130594,
+  "wh_g5_se": 153.64826320632943,
+  "wh_g5_p": 0.005077257397360629,
+  "wh_g5_t": -2.8020908465014807,
+  "wh_g7": -767.74257958975,
+  "wh_g7_se": 197.07928945299363,
+  "wh_g7_p": 9.795491131552397e-05,
+  "wh_g7_t": -3.8956025350033956
+ },
+ "cck_n_identified_g5": 84,
+ "cck_n_identified_g7": 74,
+ "cck_empirical_p": 0.42857142857142855,
+ "cck_share_placebo_neg_sig": 0.42857142857142855,
+ "cck_share_placebo_g7_neg_sig": 0.8243243243243243,
+ "cck_decision": "effect NOT specific to ChatGPT's release",
+ "wh_n_identified_g5": 84,
+ "wh_n_identified_g7": 74,
+ "wh_empirical_p": 0.7023809523809523,
+ "wh_share_placebo_neg_sig": 0.8928571428571429,
+ "wh_share_placebo_g7_neg_sig": 0.8648648648648649,
+ "wh_decision": "effect NOT specific to ChatGPT's release",
+ "year_fe_levels": {
+  "cck_g5": -4.082363083250358,
+  "cck_g5_se": 2.3043520046843646,
+  "cck_g5_p": 0.07646292091702922,
+  "cck_g5_t": -1.771588314177518,
+  "cck_g7": -4.5063671404665655,
+  "cck_g7_se": 2.726327787882853,
+  "cck_g7_p": 0.09834972841291963,
+  "cck_g7_t": -1.6529073138215757,
+  "wh_g5": -425.70349122564505,
+  "wh_g5_se": 152.64700429929172,
+  "wh_g5_p": 0.0052902091818520505,
+  "wh_g5_t": -2.7888099945346934,
+  "wh_g7": -765.6646613292588,
+  "wh_g7_se": 196.18095482696953,
+  "wh_g7_p": 9.506698001591292e-05,
+  "wh_g7_t": -3.902849091567378
+ },
+ "year_fe_levels_and_slopes": {
+  "cck_g5": -2.9376217910252986,
+  "cck_g5_se": 2.6429038667510154,
+  "cck_g5_p": 0.2663476324385021,
+  "cck_g5_t": -1.1115129187943513,
+  "cck_g7": -6.784466481920215,
+  "cck_g7_se": 3.979165551730918,
+  "cck_g7_p": 0.08819492985958415,
+  "cck_g7_t": -1.704997289939094,
+  "wh_g5": -132.20839040532485,
+  "wh_g5_se": 154.3726113939292,
+  "wh_g5_p": 0.39176336203579276,
+  "wh_g5_t": -0.8564238773415219,
+  "wh_g7": -735.4596874326357,
+  "wh_g7_se": 240.2254090039568,
+  "wh_g7_p": 0.0022020160257274135,
+  "wh_g7_t": -3.061539953171739
+ },
+ "within_year_variation": {
+  "high_all_days_within_year_share": 0.48656973483795385,
+  "low_all_days_within_year_share": 0.4442789460489983,
+  "high_post_days_within_year_share": 0.6884181056815759,
+  "low_post_days_within_year_share": 0.3596822467780473
+ },
+ "plan_literal": {
+  "n_days": 1687,
+  "n_post_high": 166,
+  "cck_g5": 2.431315439155119,
+  "cck_g5_se": 1.631801769434506,
+  "cck_g5_p_two": 0.13623538624381226,
+  "cck_g5_p_one": 0.9318823068780939,
+  "wh_g5": 268.07466745984635,
+  "wh_g5_se": 99.78283999630158,
+  "wh_g5_p_two": 0.007218747470523481,
+  "wh_g5_p_one": 0.9963906262647383
+ },
+ "holm": {
+  "wh_year_fe_levels": {
+   "raw_p": 0.0026451045909260252,
+   "holm_p": 0.021160836727408202
+  },
+  "cck_year_fe_levels": {
+   "raw_p": 0.03823146045851461,
+   "holm_p": 0.26762022320960227
+  },
+  "cck_year_fe_slopes": {
+   "raw_p": 0.13317381621925106,
+   "holm_p": 0.7990428973155064
+  },
+  "wh_year_fe_slopes": {
+   "raw_p": 0.19588168101789638,
+   "holm_p": 0.9794084050894819
+  },
+  "cck_placebo": {
+   "raw_p": 0.42857142857142855,
+   "holm_p": 1.0
+  },
+  "wh_placebo": {
+   "raw_p": 0.7023809523809523,
+   "holm_p": 1.0
+  },
+  "cck_plan_literal": {
+   "raw_p": 0.9318823068780939,
+   "holm_p": 1.0
+  },
+  "wh_plan_literal": {
+   "raw_p": 0.9963906262647383,
+   "holm_p": 1.0
+  }
+ },
+ "cck_year_fe_decision": "primary g5 driven by between-year differences (calendar confound)",
+ "wh_year_fe_decision": "primary g5 driven by between-year differences (calendar confound)"
+}
