@@ -216,7 +216,7 @@ def g2():
         verdict = "herding detected" if res.tvalues["rm2"] < sim.ONE_SIDED_CRIT else "herding NOT detected"
         ax.set_title(f"kappa = {k}: {verdict}", fontsize=10)
         ax.set_xlabel("market return that day (%)")
-        ax.legend(fontsize=7, loc="upper center")
+        ax.legend(fontsize=7, loc="lower center")
     axes[0].set_ylabel("CSAD (%)")
     fig.suptitle("Same simulated market, herding strength turned up (S1, no winsorization). "
                  "Dotted lines: where the true curve switches from bending down to bending up")

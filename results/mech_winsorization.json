@@ -1,0 +1,208 @@
+{
+ "market": "S1 kappa=0 Part B rep 0",
+ "pooled_bounds": [
+  -0.0702204899915992,
+  0.07849334240771882
+ ],
+ "share_clipped_all": 0.0020003951179019415,
+ "share_clipped_top_decile_days": 0.01882491457304226,
+ "share_clipped_bottom_5_deciles": 5.230289566734417e-05,
+ "cck_rm2": {
+  "unwinsorized": {
+   "rm2_coef": 0.06949926088094024,
+   "rm2_t": 2.309115489684935
+  },
+  "pooled": {
+   "rm2_coef": -1.4390501507175257,
+   "rm2_t": -5.090210165779741
+  },
+  "per_day": {
+   "rm2_coef": 0.06962543402218913,
+   "rm2_t": 2.311943387783623
+  }
+ },
+ "by_decile": [
+  {
+   "abs_rm_decile": 1,
+   "mean_abs_rm": 0.000439,
+   "max_abs_rm": 0.00091,
+   "clipped_share": 3.5e-05,
+   "csad_raw": 0.014013,
+   "csad_pooled": 0.014013,
+   "csad_perday": 0.014004,
+   "csad_cut_pooled_pct": 0.001206,
+   "csad_cut_perday_pct": 0.06981
+  },
+  {
+   "abs_rm_decile": 2,
+   "mean_abs_rm": 0.001417,
+   "max_abs_rm": 0.002002,
+   "clipped_share": 3.5e-05,
+   "csad_raw": 0.01404,
+   "csad_pooled": 0.01404,
+   "csad_perday": 0.01403,
+   "csad_cut_pooled_pct": 0.001403,
+   "csad_cut_perday_pct": 0.074225
+  },
+  {
+   "abs_rm_decile": 3,
+   "mean_abs_rm": 0.002569,
+   "max_abs_rm": 0.003106,
+   "clipped_share": 4.4e-05,
+   "csad_raw": 0.01406,
+   "csad_pooled": 0.014059,
+   "csad_perday": 0.014049,
+   "csad_cut_pooled_pct": 0.001216,
+   "csad_cut_perday_pct": 0.073328
+  },
+  {
+   "abs_rm_decile": 4,
+   "mean_abs_rm": 0.003776,
+   "max_abs_rm": 0.004415,
+   "clipped_share": 9.8e-05,
+   "csad_raw": 0.014017,
+   "csad_pooled": 0.014016,
+   "csad_perday": 0.014006,
+   "csad_cut_pooled_pct": 0.001921,
+   "csad_cut_perday_pct": 0.077261
+  },
+  {
+   "abs_rm_decile": 5,
+   "mean_abs_rm": 0.005259,
+   "max_abs_rm": 0.006093,
+   "clipped_share": 4.9e-05,
+   "csad_raw": 0.014005,
+   "csad_pooled": 0.014005,
+   "csad_perday": 0.013995,
+   "csad_cut_pooled_pct": 0.001481,
+   "csad_cut_perday_pct": 0.074741
+  },
+  {
+   "abs_rm_decile": 6,
+   "mean_abs_rm": 0.006913,
+   "max_abs_rm": 0.007722,
+   "clipped_share": 9.3e-05,
+   "csad_raw": 0.014069,
+   "csad_pooled": 0.014069,
+   "csad_perday": 0.014059,
+   "csad_cut_pooled_pct": 0.001883,
+   "csad_cut_perday_pct": 0.071095
+  },
+  {
+   "abs_rm_decile": 7,
+   "mean_abs_rm": 0.008659,
+   "max_abs_rm": 0.009774,
+   "clipped_share": 0.000129,
+   "csad_raw": 0.014049,
+   "csad_pooled": 0.014048,
+   "csad_perday": 0.014038,
+   "csad_cut_pooled_pct": 0.004446,
+   "csad_cut_perday_pct": 0.075303
+  },
+  {
+   "abs_rm_decile": 8,
+   "mean_abs_rm": 0.011115,
+   "max_abs_rm": 0.012793,
+   "clipped_share": 0.000159,
+   "csad_raw": 0.014042,
+   "csad_pooled": 0.014042,
+   "csad_perday": 0.014032,
+   "csad_cut_pooled_pct": 0.004073,
+   "csad_cut_perday_pct": 0.073919
+  },
+  {
+   "abs_rm_decile": 9,
+   "mean_abs_rm": 0.015095,
+   "max_abs_rm": 0.018426,
+   "clipped_share": 0.000522,
+   "csad_raw": 0.013997,
+   "csad_pooled": 0.013995,
+   "csad_perday": 0.013987,
+   "csad_cut_pooled_pct": 0.016749,
+   "csad_cut_perday_pct": 0.068291
+  },
+  {
+   "abs_rm_decile": 10,
+   "mean_abs_rm": 0.027146,
+   "max_abs_rm": 0.090321,
+   "clipped_share": 0.018825,
+   "csad_raw": 0.014004,
+   "csad_pooled": 0.013813,
+   "csad_perday": 0.013994,
+   "csad_cut_pooled_pct": 1.365999,
+   "csad_cut_perday_pct": 0.07335
+  }
+ ],
+ "ten_biggest_days": [
+  {
+   "mkt_ret": 0.09032,
+   "clipped_share": 0.7414,
+   "csad_raw": 0.01407,
+   "csad_pooled": 0.00392,
+   "csad_cut_pct": 72.17216
+  },
+  {
+   "mkt_ret": 0.08331,
+   "clipped_share": 0.61091,
+   "csad_raw": 0.01411,
+   "csad_pooled": 0.00642,
+   "csad_cut_pct": 54.47569
+  },
+  {
+   "mkt_ret": 0.08275,
+   "clipped_share": 0.59431,
+   "csad_raw": 0.01425,
+   "csad_pooled": 0.00663,
+   "csad_cut_pct": 53.46441
+  },
+  {
+   "mkt_ret": -0.06819,
+   "clipped_share": 0.44721,
+   "csad_raw": 0.01426,
+   "csad_pooled": 0.00877,
+   "csad_cut_pct": 38.50374
+  },
+  {
+   "mkt_ret": -0.06729,
+   "clipped_share": 0.45314,
+   "csad_raw": 0.01447,
+   "csad_pooled": 0.00939,
+   "csad_cut_pct": 35.13252
+  },
+  {
+   "mkt_ret": 0.05848,
+   "clipped_share": 0.13286,
+   "csad_raw": 0.01399,
+   "csad_pooled": 0.01297,
+   "csad_cut_pct": 7.33747
+  },
+  {
+   "mkt_ret": -0.05803,
+   "clipped_share": 0.24792,
+   "csad_raw": 0.01456,
+   "csad_pooled": 0.01207,
+   "csad_cut_pct": 17.05552
+  },
+  {
+   "mkt_ret": 0.0568,
+   "clipped_share": 0.10083,
+   "csad_raw": 0.01395,
+   "csad_pooled": 0.0131,
+   "csad_cut_pct": 6.05234
+  },
+  {
+   "mkt_ret": -0.05324,
+   "clipped_share": 0.18031,
+   "csad_raw": 0.01445,
+   "csad_pooled": 0.01283,
+   "csad_cut_pct": 11.15469
+  },
+  {
+   "mkt_ret": 0.04924,
+   "clipped_share": 0.03796,
+   "csad_raw": 0.0139,
+   "csad_pooled": 0.01359,
+   "csad_cut_pct": 2.22861
+  }
+ ]
+}

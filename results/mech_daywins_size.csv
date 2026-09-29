@@ -1,0 +1,7 @@
+scenario,winsorization,n_markets,cck_false_alarm,cck_median_t,wh_false_alarm,cck_post_false_alarm
+S1,"pooled (Part B, registered)",1000,1.0,-5.867445424994151,1.0,0.13
+S1,"none (Part B, D1)",1000,0.086,-0.02097612731582295,1.0,0.072
+S1,per-day (Part G),1000,0.086,-0.0340346127156021,1.0,0.074
+S5,"pooled (Part B, registered)",1000,0.001,1.1219494460476302,1.0,0.148
+S5,"none (Part B, D1)",1000,0.0,10.337863945719974,1.0,0.117
+S5,per-day (Part G),1000,0.0,10.504171760425702,1.0,0.119
