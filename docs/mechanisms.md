@@ -30,7 +30,8 @@ back to t = +2.31. Across 1,000 such no-herding markets, pooled
 winsorization made the test cry "herding" in **100%** of them. Per-day
 winsorization did so in **8.6%**, exactly the same as using no
 winsorization at all. (That leftover 8.6%, against the 5% it should be,
-has a different cause: the standard errors; see Part H.)
+is not caused by the cleaning step. The likely suspect is the standard
+errors (Part H), but we have not tested that for this term.)
 
 In the realistic scenario, where stocks have different betas, the
 same pooled clipping still pushes the test toward "herding": the
