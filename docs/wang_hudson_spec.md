@@ -58,3 +58,69 @@ Get the PDF, for example through a school, university or public
 library's Wiley access, or by requesting an author copy. Save it as
 `docs/wang_hudson_2022.pdf`. Steps E1–E6 then run exactly as fixed in
 `docs/addendum2_2026-09-28.md`.
+
+## Update 2026-09-29: paper-independent Part E steps (deviation D5)
+
+**Where the paper is.** OpenAlex lists a legal open-access copy (CC-BY,
+submitted version) at https://hull-repository.worktribe.com/output/4076132.
+That page and Wiley both show a bot-verification page to automated
+access, so a person has to open the page in a normal browser and save
+the PDF as `docs/wang_hudson_2022.pdf`.
+
+**E4: diagnosis** (`results/wh_e4_diagnosis.png`,
+`results/wh_e4_diagnosis.json`). Setup: one S1, kappa = 0 market with
+no herding, no winsorization.
+- SCSAD jumps by 2.81 points at R_m = 0, which is 2.00 x the average
+  CSAD. This is the addendum-1 B7 prediction.
+- Our cubic coefficient is -202.6 (t = -5.46, "herding"). The same
+  regression fitted to the step alone, with no data, gives -203.3,
+  i.e. 100% of it.
+- Adding a sign(R_m) regressor gives a cubic of +0.8, t = +2.49 (no
+  herding).
+- Sanity check: for x ~ N(0,1), the cubic coefficient of sign(x) is
+  -0.133. B7 predicted about -0.13.
+
+**Conclusion:** our implementation's false herding is caused entirely by
+the jump that the sign flip creates at R_m = 0.
+
+**E5: size/power** (`results/wh_variants_size_power.csv`,
+`results/wh_variants_size_*.png`, `results/wh_variants_power_*.png`).
+- Setup: the same 80,000 Part B markets. `wh_old` and `cck` reproduce
+  Part B to 3e-12.
+- False-alarm rate at kappa = 0:
+
+| Variant | Status | S1 | S2 | S3 | S4 | S5 (no winsorization) | S5 (winsorized) |
+|---|---|---|---|---|---|---|---|
+| wh_old | our implementation | 100% | 100% | 100% | 100% | 100% | 100% |
+| wh_no_intercept | unverified candidate | 100% | 100% | 100% | 100% | 100% | 100% |
+| cck_zero_intercept | unverified (as described in the request) | 100% | 100% | 100% | 100% | 100% | 100% |
+| wh_sign_term | our diagnostic, not the paper | 11.2% | 0.0% | 8.9% | 12.4% | 0.0% | 13.0% |
+| cck (reference) | standard | 8.6% | 0.0% | 8.4% | 8.3% | 0.0% | 0.1% |
+
+- **Removing the intercept cannot fix the WH test.** The jump is an odd
+  function (it flips sign with R_m), and a constant is even, so the
+  constant was never what absorbed it.
+- **CCK with the intercept forced to zero false-alarms 100%.** With no
+  herding, CSAD sits near 1.4% even when R_m = 0, because of
+  stock-specific noise. A curve forced through zero has to rise steeply
+  and then bend down to reach that level, and the downward bend reads as
+  herding. The paper may define this test differently, for example on a
+  different dependent variable. We can't check without the text.
+- **With the jump absorbed** (wh_sign_term), the Wang-Hudson form behaves
+  like CCK.
+  - Size is similar: slight over-rejection when betas are equal, and
+    conservative with real betas.
+  - Power in S5 without winsorization is somewhat higher than CCK:
+    66.5% vs 56.4% at kappa = 30, and 99.6% vs 99.8% at kappa = 100.
+  - Like CCK, it collapses at kappa = 3000 (2%).
+
+**E6 can't be decided yet.** We can't say (a), (b) or (c) until we see
+how the paper defines SCSAD and the regression. Two statements hold
+either way:
+- our implementation's 100% false-alarm rate is an artifact of the jump
+  at zero, and
+- neither simple "intercept" reading of the paper fixes it.
+
+If the paper's specification contains nothing that handles the jump, the
+published method would share the flaw (outcome b). If it does, the flaw
+was ours (outcome a).

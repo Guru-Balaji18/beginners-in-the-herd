@@ -1,0 +1,8 @@
+{
+ "markets": 1000,
+ "scenario": "S1 kappa=0, per-day winsorized, Part B seeds",
+ "nw5_false_alarm": 0.086,
+ "boot_false_alarm": 0.033,
+ "nw5_sd_t": 1.1740639777689377,
+ "boot_sd_t": 0.8676974644946762
+}

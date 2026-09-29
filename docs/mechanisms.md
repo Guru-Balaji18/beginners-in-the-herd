@@ -16,7 +16,7 @@ exactly on the big-move days, which is the pattern the herding test
 looks for. The test therefore "found" herding in every one of 1,000
 markets built to have none. Winsorizing each day at its own cutoffs
 trims only the one or two most extreme stocks that day and removes the
-problem completely. SE_SENTENCE
+problem completely. The small leftover (8.6% false alarms instead of 5%) comes from the standard errors, not from the cleaning: with block-bootstrap standard errors the same 1,000 markets give 3.3%, slightly on the cautious side.
 
 | One no-herding market (S1) | Value |
 |---|---|
@@ -24,6 +24,7 @@ problem completely. SE_SENTENCE
 | Spread (CSAD) on the +9% day: before, after clipping | 1.41% → **0.39%** (-72%) |
 | Herding t-statistic (below -1.645 = "herding"): no clipping, pooled, per-day | +2.31, **-5.09**, +2.31 |
 | False-alarm rate in 1,000 no-herding markets: pooled, per-day, none | **100%**, 8.6%, 8.6% |
+| Per-day, with block-bootstrap standard errors instead of Newey-West(5) | 3.3% |
 
 ## 2. The standard test misses the strongest herding — `results/mech_cck_nonmonotonic.png`
 
@@ -67,3 +68,5 @@ which we could not access.
 | Our WH cubic coefficient, t | -202.6, **t = -5.46** ("herding") |
 | Same regression fitted to the cliff alone (no data) | -203.3 (100% of the above) |
 | With a jump term added: cubic coefficient, t | +0.8, t = +2.49 (no herding) |
+| False alarms, 1,000 markets per scenario (no winsorization): ours / with jump term | **100%** everywhere / 0-12% |
+| Removing the intercept (a candidate reading of the paper): false alarms | still **100%** everywhere |

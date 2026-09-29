@@ -582,6 +582,18 @@ added, entry measured in the 52 weeks before ChatGPT for Step 4.
   over-reject.
 
 ### Parts E–H of addendum 2 (2026-09-28) — see docs/addendum2_2026-09-28.md
+- **Part E, paper-independent steps (D5, 2026-09-29):**
+  - Our WH false herding is caused entirely by the SCSAD jump at
+    Rm = 0: the step alone reproduces 100% of the cubic, and adding
+    a sign(Rm) term removes it.
+  - Unverified candidates (WH without intercept, CCK with intercept
+    = 0) both false-alarm 100%.
+  - Paper-exact comparison still pending: the PDF is CC-BY at
+    hull-repository.worktribe.com/output/4076132 but behind a bot
+    check; save it as docs/wang_hudson_2022.pdf.
+  - Part G's leftover 8.6% CCK false alarms (per-day winsorization)
+    drop to 3.3% with bootstrap SEs, so the leftover is a
+    standard-error problem.
 - **Part E (verify Wang-Hudson against the paper): BLOCKED.** No PDF is
   available, and Wiley showed a bot-verification page.
   - `docs/wang_hudson_spec.md` lists the 8 details we can't verify.
