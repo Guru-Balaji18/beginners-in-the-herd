@@ -141,3 +141,18 @@ were never affected.
 2017-07-31 point, which rests on only 10 non-High pre-period days,
 is drawn at the edge and noted on the chart. It is still counted in all
 statistics.
+
+## Parts E–H (addendum 2) — no deviations
+
+- Part E stopped at its pre-registered gate, because
+  `docs/wang_hudson_2022.pdf` is not available (see
+  `docs/wang_hudson_spec.md`). This is the registered plan, not a
+  deviation.
+- Parts F, G and H ran as registered: same seeds, market counts, methods
+  and decision rules. The bootstrap used B = 999 in simulation and
+  B = 5,000 on real data, as registered.
+- H2 needed no reduction in the number of markets.
+- Extra output, not used for any decision: the H3 (retail-attention)
+  results on the per-day-winsorized panel,
+  `results/step5_daywins_h3_results.csv`, produced as a side effect of
+  rerunning `main_regression.run`.

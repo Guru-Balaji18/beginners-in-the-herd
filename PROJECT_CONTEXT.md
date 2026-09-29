@@ -581,6 +581,42 @@ added, entry measured in the 52 weeks before ChatGPT for Step 4.
   That test is itself undermined by Part B, where WH's Post terms
   over-reject.
 
+### Parts E–H of addendum 2 (2026-09-28) — see docs/addendum2_2026-09-28.md
+- **Part E (verify Wang-Hudson against the paper): BLOCKED.** No PDF is
+  available, and Wiley showed a bot-verification page.
+  - `docs/wang_hudson_spec.md` lists the 8 details we can't verify.
+  - Until the paper is checked, write "our implementation over-rejects",
+    never "Wang-Hudson over-rejects".
+  - To resume, put the paper at `docs/wang_hudson_2022.pdf`.
+- **Part F (calibrated test, `calibrated_test.py`):**
+  - Held-out size is 4.3–5.7% for every statistic.
+  - Real calibrated one-sided p: CCK base 0.136, WH base 0.50,
+    CCK g5 0.119, WH g5 0.39, CCK g7 0.075, WH g7 0.24. **Nothing is
+    significant.**
+  - Calibrated WH (ours) has no power.
+  - The base-herding calibration depends heavily on the scenario
+    (S5-calibrated CCK false-alarms on 100% of S4 markets).
+  - The g5/g7 calibration is fairly robust across scenarios.
+- **Part G (`mechanisms_diagnostics.py`, `docs/mechanisms.md`):**
+  - Pooled winsorization clips 74% of stocks on a +9% day and cuts that
+    day's CSAD by 72%, which creates false herding.
+  - Per-day winsorization has the same size as no winsorization.
+  - CCK's power collapses because a parabola can't fit the
+    spike-and-flat-tails shape of extreme herding.
+- **Part H (`robust_se.py`, `se_validation.py`):**
+  - Newey-West with **longer** lags makes the false alarms **worse**, so
+    the forward-filled-index explanation is wrong.
+  - The 21-day block bootstrap fixes CCK (g5 4.9%, g7 6.6%, Post 8.5%)
+    but not WH (15–18%). No method is fully calibrated; the bootstrap is
+    best.
+  - Real data with the bootstrap: g5 CCK p = 0.20, WH p = 0.071
+    (one-sided); g7 CCK 0.031, WH 0.006, but WH's bootstrap over-rejects.
+  - Per-day winsorization Step 5: primary CCK g5 -4.63 (NW5 one-sided p
+    0.028; bootstrap 0.155), WH g5 -420 (bootstrap 0.074). No sign
+    changes in the primary spec.
+  - Placebo/year-FE decisions are unchanged. WH year-FE-levels no longer
+    survives Holm (0.021 -> 0.65).
+
 ### Not yet started
 - Deciding on the per-stock Google Trends component (see Step 4)
 - `data/csad.csv` / `robustness_wang_hudson.py` standalone outputs are
