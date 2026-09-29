@@ -1,71 +1,69 @@
-# Two strange behaviors of the herding tests, explained (Part G)
+# Why the herding tests misbehave — plain-English explanations for judges
 
-Both are shown on simulated markets where we control the truth. The
-figures are in `results/`; the numbers are in `results/mech_*.json/csv`.
+Each mechanism was shown on simulated stock markets where we know the
+truth. Each has one explanation paragraph, one figure, and the numbers
+behind it. Parts G and E of `docs/addendum2_2026-09-28.md`.
 
-## 1. Why cleaning the data manufactured "herding" (`results/mech_winsorization.png`)
+## 1. Cleaning the data manufactured "herding" — `results/mech_winsorization.png`
 
-To stop a few bad prices from distorting results, we "winsorized" the
-returns: any daily stock return beyond one shared cutoff was pulled back
-to that cutoff. The cutoffs were the 0.1% and 99.9% points of *all*
-returns pooled together, about -7.0% and +7.8% in the example market.
+To limit bad prices, we "winsorized" returns: every daily stock return
+beyond one shared cutoff, set from all days pooled together (about -7%
+and +7.8%), was pulled back to that cutoff. On a quiet day no stock gets
+near those cutoffs. On a day when the whole market jumps 9%, every stock
+jumps about 9% with it, so most of them cross the cutoff and are all cut
+back to the same value. That squeezes the day's spread between stocks
+exactly on the big-move days, which is the pattern the herding test
+looks for. The test therefore "found" herding in every one of 1,000
+markets built to have none. Winsorizing each day at its own cutoffs
+trims only the one or two most extreme stocks that day and removes the
+problem completely. SE_SENTENCE
 
-On a normal day almost no stock gets near those cutoffs. On a day when
-the whole market jumps 9%, every stock jumps about 9% together, so most
-of them land past the +7.8% cutoff:
-- **74% of stocks** were cut back on that day;
-- the day's spread between stocks (CSAD) shrank by **72%**, from 1.41%
-  to 0.39%.
+| One no-herding market (S1) | Value |
+|---|---|
+| Stocks clipped, quiet half of days / biggest 10% of days / the +9% day | 0.005% / 1.9% / **74%** |
+| Spread (CSAD) on the +9% day: before, after clipping | 1.41% → **0.39%** (-72%) |
+| Herding t-statistic (below -1.645 = "herding"): no clipping, pooled, per-day | +2.31, **-5.09**, +2.31 |
+| False-alarm rate in 1,000 no-herding markets: pooled, per-day, none | **100%**, 8.6%, 8.6% |
 
-The herding test looks for exactly this pattern: stocks bunching
-together on big-move days. So it "found" herding, CCK t = -5.09, in a
-market built to have none. Without the cleaning step the same market
-gives t = +2.31, meaning no herding.
+## 2. The standard test misses the strongest herding — `results/mech_cck_nonmonotonic.png`
 
-The fix is to winsorize **each day separately**, at that day's own
-0.1% and 99.9% points. That trims only the one or two most extreme
-stocks relative to that day's market. It shaves the spread by the same
-tiny amount (about 0.07%) on every day, big or quiet, and the test is
-back to t = +2.31. Across 1,000 such no-herding markets, pooled
-winsorization made the test cry "herding" in **100%** of them. Per-day
-winsorization did so in **8.6%**, exactly the same as using no
-winsorization at all. (That leftover 8.6%, against the 5% it should be,
-is not caused by the cleaning step. The likely suspect is the standard
-errors (Part H), but we have not tested that for this term.)
+The standard (CCK) test fits a parabola through "spread between stocks"
+against "size of the market move". It calls it herding when that
+parabola bends downward, meaning spread falls behind on big days.
+Moderate herding gives a gentle dome, which a parabola fits well, so it
+is detected. Very strong herding makes the spread collapse to almost
+zero once the market moves more than about 1%, and then stay flat. That
+spike with flat tails is a shape a parabola cannot draw. The closest it
+can get is a steep V with an upward bend at the ends. All the herding
+ends up in the V's slope, which the test ignores, and the bend it does
+read points the "no herding" way. So the test's power first rises with
+herding strength, then falls.
 
-In the realistic scenario, where stocks have different betas, the
-same pooled clipping still pushes the test toward "herding": the
-median t falls from +10.3 to +1.1. There, though, the natural spread
-between high- and low-beta stocks on big days hides the effect. So the
-cleaning step biased our test toward herding in every scenario; it just
-isn't visible in the final yes/no answer in all of them.
+| Same market, herding strength kappa | 0 | 100 | 3000 |
+|---|---|---|---|
+| Parabola's bend, t (below -1.645 = "herding") | +2.3 | **-11.7** | **+31.6** |
+| V-slope term, t | -1.7 | -8.4 | **-144** |
+| Days where the true curve bends upward | — | 0.3% | 27% |
 
-## 2. Why the standard test misses the strongest herding (`results/mech_cck_nonmonotonic.png`)
+## 3. Our Wang-Hudson test always says "herding" (from Part E) — `results/wh_e4_diagnosis.png`
 
-The standard (CCK) test fits a smooth U-shaped or upside-down-U-shaped
-curve (a parabola in |R_m|) through the relationship between the spread
-of stock returns (CSAD) and the size of the market move. It calls it
-"herding" when the curve bends *downward*, i.e. the spread grows less
-than it should, or shrinks, on big days.
+Our version of the Wang-Hudson test flips the sign of the spread on
+down-market days: +spread on up days, -spread on down days. Spread is
+always positive, so this creates a cliff at a market return of exactly
+zero: the value jumps from about -1.4% to +1.4%. The test then fits a
+smooth S-shaped cubic curve through the data, and a smooth curve
+crossing a cliff has to overshoot and bend back. That bend-back is
+exactly the negative cubic term the test reads as herding. A made-up
+dataset containing nothing but the cliff produces the same "herding"
+coefficient, and giving the regression one extra term that allows a
+jump at zero makes the false herding disappear. This is a property of
+**our implementation**. Whether the published Wang & Hudson method
+handles the jump differently can only be checked against the paper,
+which we could not access.
 
-In our simulation, herding pulls every stock toward the market by a
-fraction that grows with the size of the move, so the true spread
-falls like 1 / (1 + kappa x R_m^2):
-- **Moderate herding (kappa = 100):** the spread only starts to fall
-  on big days, forming a gentle dome. The parabola fits it well and
-  bends downward, so herding is detected (t = -11.7).
-- **Very strong herding (kappa = 3000):** the spread collapses almost
-  to zero once the market moves more than about 1%, then stays flat
-  near zero. The true curve is a sharp spike at zero with long flat
-  tails. It bends *up* beyond about 1.05%, which covers 27% of the
-  days.
-
-A parabola cannot draw a spike with flat tails. The best it can do is
-a steep V: a large negative slope in |R_m| (t = -144) that carries all
-the herding, plus an upward bend (R_m^2 t = +31.6) to flatten the
-tails. The test only looks at the bend, so the strongest herding in the
-simulation reads as "no herding".
-
-The test's sign convention is not wrong. The shape it assumes just
-can't represent an extreme collapse in spread, so its power first
-rises with herding strength and then falls.
+| One no-herding market (S1, no winsorization) | Value |
+|---|---|
+| Jump in signed spread at R_m = 0 | 2.81 points = **2.00 x** average spread |
+| Our WH cubic coefficient, t | -202.6, **t = -5.46** ("herding") |
+| Same regression fitted to the cliff alone (no data) | -203.3 (100% of the above) |
+| With a jump term added: cubic coefficient, t | +0.8, t = +2.49 (no herding) |

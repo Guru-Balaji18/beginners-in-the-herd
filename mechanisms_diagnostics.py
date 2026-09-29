@@ -182,6 +182,36 @@ def summarize_size():
     print(t.round(3).to_string(index=False))
 
 
+# ---- D5: is the leftover per-day-winsorized CCK over-rejection a standard-error problem? ----
+SE_PATH = RES_DIR / "mech_daywins_se_raw.csv"
+
+
+def _se_one(rep):
+    import robust_se as rse
+    import wang_hudson_variants as whv
+    R, _ = sim.simulate_returns(_CAL, "S1", 0, sim.rng_for("S1", rep), winsorize=False)
+    c = whv.fast_csad(per_day_clip(R), _CAL["dates"])
+    rm = c["mkt_ret"]
+    X = pd.DataFrame({"abs_rm": rm.abs(), "rm2": rm ** 2, "rm2_post": rm ** 2 * c["post"]})
+    boot_rng = np.random.default_rng(np.random.SeedSequence([sim.BASE_SEED, 9, rep]))
+    return {"rep": rep, "nw5_t": float(rse.nw(c["csad"], X, 5).tvalues["rm2"]),
+            "boot_t": float(rse.block_bootstrap(c["csad"], X, 999, boot_rng).tvalues["rm2"])}
+
+
+def g1_se(workers=12, reps=1000):
+    import multiprocessing as mp
+    with mp.Pool(workers, initializer=_init) as pool:
+        rows = pool.map(_se_one, range(reps), chunksize=8)
+    d = pd.DataFrame(rows)
+    d.to_csv(SE_PATH, index=False)
+    out = {"markets": len(d), "scenario": "S1 kappa=0, per-day winsorized, Part B seeds",
+           "nw5_false_alarm": float((d["nw5_t"] < sim.ONE_SIDED_CRIT).mean()),
+           "boot_false_alarm": float((d["boot_t"] < sim.ONE_SIDED_CRIT).mean()),
+           "nw5_sd_t": float(d["nw5_t"].std()), "boot_sd_t": float(d["boot_t"].std())}
+    (RES_DIR / "mech_daywins_se.json").write_text(json.dumps(out, indent=1))
+    print(json.dumps(out, indent=1))
+
+
 # =====================================================================
 # G2
 # =====================================================================
@@ -235,5 +265,7 @@ if __name__ == "__main__":
         g1()
     elif cmd == "g1size":
         g1_size(int(sys.argv[2]) if len(sys.argv) > 2 else 12)
+    elif cmd == "g1se":
+        g1_se(int(sys.argv[2]) if len(sys.argv) > 2 else 12)
     elif cmd == "g2":
         g2()
