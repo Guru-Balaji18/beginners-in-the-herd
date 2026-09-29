@@ -156,3 +156,51 @@ statistics.
   results on the per-day-winsorized panel,
   `results/step5_daywins_h3_results.csv`, produced as a side effect of
   rerunning `main_regression.run`.
+
+## D5 — 2026-09-29: finish the paper-independent parts of Part E, and close two gaps in Part G
+
+**Part E.** Addendum 2 made all of Part E wait for the paper. The paper
+still can't be read here:
+- OpenAlex lists a legal open-access copy (CC-BY, submitted version) at
+  https://hull-repository.worktribe.com/output/4076132;
+- both that page and Wiley return a bot-verification page to automated
+  access, and we don't try to get around it.
+
+We were asked to complete Part E, so we now run every step that does
+**not** need the paper:
+- **E4 diagnosis, as registered:** one S1 kappa = 0 market (Part B
+  seed, rep 0); SCSAD vs R_m with the fitted old curve; the jump at
+  R_m = 0; the old cubic fitted to a pure step. Added diagnostic: the
+  old regression plus one extra regressor, sign(R_m). If the jump at
+  zero causes the false herding, this term should absorb it and the
+  cubic t should move to about 0.
+- **E3/E5 on variants that don't need the paper**, all on the same
+  Part B markets (both pipelines, all scenarios, full kappa grid,
+  1,000 per cell):
+  - `wh_old`: unchanged. It must reproduce Part B exactly; this is a
+    check.
+  - `cck_zero_intercept`: CSAD = g1|R_m| + g2 R_m^2 + g3 R_m^2 x Post,
+    no constant; herding if g2 < 0. The request describes this as
+    Wang & Hudson's other fix. It is **unverified against the paper**.
+  - `wh_no_intercept`: the old SCSAD cubic with the constant removed.
+    This is the "suppression of intercept" mentioned by a citing paper
+    (PROJECT_CONTEXT.md). It is **an unverified candidate, not
+    paper-exact**.
+  - `wh_sign_term`: the old SCSAD cubic plus a sign(R_m) regressor.
+    **Our diagnostic, not from the paper.** It tests whether removing
+    the jump fixes the size.
+- Speed: this pass computes CSAD/SCSAD with numpy instead of
+  `compute_csad`. Addendum 1 (B1) allows this if it matches to within
+  1e-12; that is checked on simulated panels before the run.
+- **E6 cannot be decided** until `wh_paper` exists. We will report which
+  **candidates** are well-sized, and say explicitly that this is not
+  outcome (a), (b) or (c).
+
+**Part G.**
+- `docs/mechanisms.md` is rewritten to **one paragraph per mechanism**,
+  as requested. The numbers move into a table below each paragraph.
+- The leftover 8.6% CCK false-alarm rate with per-day winsorization (S1)
+  was left untested. We now test it: the same 1,000 S1 kappa = 0
+  per-day-winsorized markets (Part B seeds), base CCK R_m^2 term, NW(5)
+  vs the 21-day block bootstrap (B = 999). If the bootstrap brings the
+  rate into 3.6–6.4%, the leftover is a standard-error problem.
