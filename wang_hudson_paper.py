@@ -199,7 +199,7 @@ def e5_figure(tab):
         ax.axhspan(3.6, 6.4, color="0.5", alpha=0.25, label="correct (3.6-6.4%)")
         ax.set_xticks(x)
         ax.set_xticklabels(list(sim.SCENARIOS))
-        ax.set_ylim(0, 128)
+        ax.set_ylim(0, 145)
         ax.set_title("winsorized as in our pipeline" if w else "no winsorization", fontsize=10)
     axes[0].set_ylabel("% of NO-herding markets flagged 'herding'")
     axes[0].legend(fontsize=7, ncol=4, loc="upper center")

@@ -1,0 +1,41 @@
+scenario,kappa,statistic,n_markets,true_effect,textbook_flag_rate,calibrated_flag_rate
+S2,0,wh_paper_t,1000,none (null),1.0,0.2
+S2,0,sol1_paper_t,1000,none (null),1.0,0.143
+S2,0,wh_paper_g5_t,1000,none (null),0.468,0.046
+S2,0,wh_paper_g7_t,1000,none (null),0.43,0.046
+S4,0,wh_paper_t,1000,none (null),1.0,0.234
+S4,0,sol1_paper_t,1000,none (null),1.0,0.238
+S4,0,wh_paper_g5_t,1000,none (null),0.47,0.037
+S4,0,wh_paper_g7_t,1000,none (null),0.394,0.05
+S5,0,wh_paper_t,1000,none (null),1.0,0.057
+S5,0,sol1_paper_t,1000,none (null),1.0,0.056
+S5,0,wh_paper_g5_t,1000,none (null),0.51,0.061
+S5,0,wh_paper_g7_t,1000,none (null),0.442,0.056
+S5,3,wh_paper_t,1000,herding,1.0,0.057
+S5,3,sol1_paper_t,1000,herding,1.0,0.057
+S5,3,wh_paper_g5_t,1000,none (null),0.51,0.061
+S5,3,wh_paper_g7_t,1000,none (null),0.442,0.056
+S5,10,wh_paper_t,1000,herding,1.0,0.062
+S5,10,sol1_paper_t,1000,herding,1.0,0.062
+S5,10,wh_paper_g5_t,1000,none (null),0.51,0.06
+S5,10,wh_paper_g7_t,1000,none (null),0.442,0.056
+S5,30,wh_paper_t,1000,herding,1.0,0.07
+S5,30,sol1_paper_t,1000,herding,1.0,0.076
+S5,30,wh_paper_g5_t,1000,none (null),0.508,0.06
+S5,30,wh_paper_g7_t,1000,none (null),0.445,0.057
+S5,100,wh_paper_t,1000,herding,1.0,0.059
+S5,100,sol1_paper_t,1000,herding,1.0,0.08
+S5,100,wh_paper_g5_t,1000,none (null),0.504,0.059
+S5,100,wh_paper_g7_t,1000,none (null),0.446,0.059
+S5,300,wh_paper_t,1000,herding,1.0,0.031
+S5,300,sol1_paper_t,1000,herding,1.0,0.054
+S5,300,wh_paper_g5_t,1000,none (null),0.499,0.059
+S5,300,wh_paper_g7_t,1000,none (null),0.454,0.06
+S5,1000,wh_paper_t,1000,herding,1.0,0.01
+S5,1000,sol1_paper_t,1000,herding,1.0,0.019
+S5,1000,wh_paper_g5_t,1000,none (null),0.496,0.058
+S5,1000,wh_paper_g7_t,1000,none (null),0.454,0.064
+S5,3000,wh_paper_t,1000,herding,1.0,0.004
+S5,3000,sol1_paper_t,1000,herding,1.0,0.006
+S5,3000,wh_paper_g5_t,1000,none (null),0.502,0.061
+S5,3000,wh_paper_g7_t,1000,none (null),0.449,0.064

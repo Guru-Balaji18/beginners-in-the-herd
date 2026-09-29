@@ -1,0 +1,13 @@
+{
+ "S5_winsorized_kappa0_false_alarm": {
+  "wh_paper": 1.0,
+  "wh_old": 1.0
+ },
+ "S5_winsorized_kappa0_false_alarm_paper_rule": {
+  "wh_paper": 1.0,
+  "wh_old": 1.0
+ },
+ "verdict": "b",
+ "corr_t_wh_paper_vs_wh_old": 0.6939773945917536,
+ "n_markets": 80000
+}

@@ -278,3 +278,12 @@ no-herding simulation** (p.12–15).
 - Methods: HC1 (the paper's) plus the original five: NW5, NW21, NW63,
   NW126, and the bootstrap with B = 999.
 - Real data: the primary spec with HC1 and with the bootstrap (B = 5,000).
+
+**D6 note (post-hoc, added after seeing E5):** the paper-exact tests
+were also run on the per-day-winsorized real panel from Part H
+(`data/return_panel_daywins.csv`).
+- Reason: E5 showed that Solution 3 false-alarms 83–95% on the pooled
+  winsorized pipeline, but only 0–6% without winsorization.
+- This check is exploratory. Its size on per-day-winsorized simulated
+  markets was not simulated. Part G showed per-day winsorization
+  matches no winsorization for CCK.

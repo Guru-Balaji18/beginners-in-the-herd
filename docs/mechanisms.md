@@ -57,10 +57,12 @@ crossing a cliff has to overshoot and bend back. That bend-back is
 exactly the negative cubic term the test reads as herding. A made-up
 dataset containing nothing but the cliff produces the same "herding"
 coefficient, and giving the regression one extra term that allows a
-jump at zero makes the false herding disappear. This is a property of
-**our implementation**. Whether the published Wang & Hudson method
-handles the jump differently can only be checked against the paper,
-which we could not access.
+jump at zero makes the false herding disappear. We have now checked
+the paper itself: its Equation 3 is exactly our regression, it never
+mentions the jump, and its exact version also cries "herding" in 100%
+of our no-herding markets. The paper's own simulation missed this
+because it used market moves of up to ±50%, which made the cliff tiny
+by comparison. With realistic daily moves the cliff dominates.
 
 | One no-herding market (S1, no winsorization) | Value |
 |---|---|
@@ -70,3 +72,5 @@ which we could not access.
 | With a jump term added: cubic coefficient, t | +0.8, t = +2.49 (no herding) |
 | False alarms, 1,000 markets per scenario (no winsorization): ours / with jump term | **100%** everywhere / 0-12% |
 | Removing the intercept (a candidate reading of the paper): false alarms | still **100%** everywhere |
+| The paper's exact method (log returns, robust SEs): false alarms | **100%** everywhere |
+| The paper's own design with its stated N(0,1) errors, rerun | 100% (the paper reports 14.4%) |

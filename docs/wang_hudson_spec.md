@@ -181,3 +181,80 @@ the standard-error method, and the one-sided vs two-sided rule. None of
 these changes the point estimate's reaction to the jump at zero.
 **The paper does not address the sign jump at R_m = 0**, and neither
 did we.
+
+## E5/E6 with the paper-exact variants (D6)
+
+**Machinery.** `test_wang_hudson_paper.py` passes 8/8. In particular,
+Equation 3 gives exactly the same point estimates as our WH regression
+on the same data.
+
+**E5: false alarms with no herding, 1,000 markets per cell, Part B
+seeds.** One-sided 5% rule; the paper's two-sided rule gives the same
+picture.
+
+| Variant | S1 | S2 | S3 | S4 | S5 | S5 winsorized |
+|---|---|---|---|---|---|---|
+| **wh_paper (Solution 2, Eq. 3)** | **100%** | **100%** | **100%** | **100%** | **100%** | **100%** |
+| wh_old (ours) | 100% | 100% | 100% | 100% | 100% | 100% |
+| **sol1_paper (Solution 1, no constant)** | **100%** | **100%** | **100%** | **100%** | **100%** | **100%** |
+| sol3_abs1 (Solution 3, \|R_m\| ≥ 1%) | 5.2% | 0.0% | 6.2% | 6.3% | 0.0% | 82.7% |
+| sol3_top10 (Solution 3, top 10%) | 5.1% | 0.0% | 6.3% | 6.0% | 0.2% | 94.7% |
+| cck_paper (Eq. 2 incl. signed R_m, HC1) | 4.9% | 0.0% | 5.7% | 3.9% | 0.0% | 0.0% |
+| cck (ours, NW5) | 8.6% | 0.0% | 8.4% | 8.3% | 0.0% | 0.1% |
+
+Unless marked winsorized, columns are without winsorization.
+
+- Power in S5 without winsorization, at kappa = 3 / 10 / 30 / 100 / 1000 / 3000:
+  - sol3_top10: 1.5% / 20.8% / 96.3% / 100% / 0.2% / 0%;
+  - cck_paper: 0% / 0% / 59.9% / 99.7% / 100% / 1.7%.
+- Solution 3 keeps only big-move days, which are exactly where pooled
+  winsorization distorts CSAD (Part G). That is why it false-alarms
+  83–95% on the winsorized pipeline.
+
+**E6 verdict: (b). The published method also over-rejects.**
+- `wh_paper`'s false-alarm rate in S5 (winsorized, kappa = 0) is 100%,
+  the same as `wh_old`.
+- The paper's method **does not address the sign jump at R_m = 0**. It
+  leaves R_m = 0 undefined, never mentions the jump, and fits a smooth
+  cubic across it (E1 items 6–9, 16).
+- The Part B failure was **not** an implementation error on our side.
+  The remaining differences (log returns, HC1 vs Newey-West) do not
+  change the result.
+- Paper-exact and old t-statistics correlate 0.69 across the 80,000
+  markets; both are below -1.645 in every no-herding market.
+
+**Why the paper's own simulation looked fine** (`results/wh_paper_replication.csv`).
+We reran the paper's no-herding design: 20 stocks, R_m from -0.5 to 0.5,
+500 simulations, HC1, two-sided 5%.
+
+| Error SD | Jump at 0 ÷ range of the SCSAD line | "Herding" found |
+|---|---|---|
+| 1.0 (the stated "standard normal") | 4.55 | 100% |
+| 0.3 | 1.37 | 100% |
+| 0.1 | 0.46 | 100% |
+| 0.03 | 0.14 | 100% |
+| **0.01** | **0.05** | **16.6%** (paper: 14.4%) |
+
+- The paper's 14.4% is reproduced only when the jump is about 5% of the
+  vertical range of SCSAD. This matches the small gap visible in its
+  Figure 5, where market moves span ±50%.
+- In real daily data, market moves are about ±1–10% while CSAD is about
+  1.4%. The jump is then as large as the whole SCSAD line, so the bias
+  is total.
+
+**Real data, paper-exact** (`results/real_wh_paper.json`,
+`results/calibrated_paper_results.csv`). Calibrated p uses the S5 null:
+
+| Test | Real t | Textbook one-sided p | Calibrated p |
+|---|---|---|---|
+| Solution 2 (base) | -7.58 | <0.0001 | 0.708 |
+| Solution 1 (base) | -8.32 | <0.0001 | 0.648 |
+| Solution 2 g5 (Post x High), HC1 | -2.91 | 0.002 | 0.374 |
+| Solution 2 g7 (Post x Low), HC1 | -4.06 | <0.0001 | 0.226 |
+| Solution 2 g5, 21-day bootstrap | -1.40 | 0.081 | — |
+
+- Solution 3 on the registered pooled-winsorized panel: t = -2.36
+  (|R_m| ≥ 1%) and -3.15 (top 10%). E5 shows a 83–95% false-alarm rate
+  on that pipeline.
+- Solution 3 on the per-day-winsorized panel (post-hoc, D6 note):
+  t = -0.02 and -1.19, i.e. **no herding**.

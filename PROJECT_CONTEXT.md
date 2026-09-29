@@ -582,6 +582,21 @@ added, entry measured in the 52 weeks before ChatGPT for Step 4.
   over-reject.
 
 ### Parts E–H of addendum 2 (2026-09-28) — see docs/addendum2_2026-09-28.md
+- **Part E COMPLETE (D6, 2026-09-29), verdict (b): the published method over-rejects too.**
+  - Our WH = the paper's Solution 2 (Eq. 3). The paper never
+    addresses the SCSAD jump at Rm = 0.
+  - Paper-exact Solution 2 and Solution 1 false-alarm 100% in all
+    scenarios.
+  - The paper's own design with its stated errors also gives 100%;
+    its 14.4% needs error SD 0.01.
+  - Solution 3 is well-sized only without pooled winsorization. On
+    the per-day-winsorized real panel it finds no herding
+    (t -0.02 / -1.19).
+  - Paper-exact real calibrated p: base 0.71, g5 0.37.
+  - The calibrated paper-exact WH has ~no power. Its g5
+    calibration is robust (S2 4.6%, S4 3.7%).
+  - H: HC1 SEs false-alarm on g5 52%, bootstrap 18%.
+  - Docs: docs/wang_hudson_spec.md.
 - **Part E, paper-independent steps (D5, 2026-09-29):**
   - Our WH false herding is caused entirely by the SCSAD jump at
     Rm = 0: the step alone reproduces 100% of the cubic, and adding
