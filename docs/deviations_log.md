@@ -204,3 +204,77 @@ We were asked to complete Part E, so we now run every step that does
   per-day-winsorized markets (Part B seeds), base CCK R_m^2 term, NW(5)
   vs the 21-day block bootstrap (B = 999). If the bootstrap brings the
   rate into 3.6–6.4%, the leftover is a standard-error problem.
+
+## D6 — 2026-09-29: paper-exact variants, now that the paper is available (fixed before any code)
+
+The paper is at `wang_hudson_2022.pdf`, the CC-BY submitted manuscript.
+E1/E2 are in `docs/wang_hudson_spec.md`. Where the paper is silent or
+ambiguous, we resolve it as follows, **before running anything**:
+
+**Resolving the paper's gaps:**
+- **Returns: logarithmic**, "used throughout" (p.23).
+  - Simulated or real simple returns R become ln(1 + R).
+  - The market return is the equal-weighted mean of the log returns.
+  - CSAD and SCSAD are computed from those.
+- **SCSAD at R_m = 0** is undefined in the paper (p.10). Such days would
+  be dropped; in practice there are none.
+- **Estimator.** The paper says "robust regression" (p.23) without
+  defining it. Its tables report t-statistics and adjusted R², the
+  output of OLS with heteroskedasticity-robust standard errors, which
+  M-estimation ("rreg") does not report. We therefore use **OLS with
+  White HC1 standard errors** as the paper-exact estimator. This is an
+  interpretation, stated as such.
+- **Decision rule:**
+  - primary: our registered one-sided 5% rule (t < −1.645), so results
+    are comparable with Part B;
+  - also reported: the paper's rule, two-sided 5% (t < −1.96 for
+    herding).
+
+**Paper-exact variants** (`wang_hudson_paper.py`; old code untouched):
+- `wh_paper` (Solution 2): SCSAD = α + γ1 R_m + γ2 R_m² + γ3 R_m³;
+  herding if γ3 < 0.
+- `cck_paper` (Eq. 2): CSAD = α + γ1 R_m + γ2 |R_m| + γ3 R_m²; herding
+  if γ3 < 0.
+- `sol1_paper` (Solution 1): Eq. 2 with α = 0.
+- `sol3_abs1` and `sol3_top10` (Solution 3): Eq. 2 on days with
+  |R_m| ≥ 1%, and on the largest 10% of days by |R_m|. These are two of
+  the paper's empirical thresholds (p.28–33); the choice among them is
+  ours.
+- The paper has no Post term, so E5 runs the paper's equations exactly,
+  without Post.
+
+**E5** runs on the same 80,000 Part B markets and seeds as before.
+
+**E6 verdict rule** (as in addendum 2), using `wh_paper`'s false-alarm
+rate in S5, winsorized, kappa = 0:
+- (a) `wh_paper` is inside 3.6–6.4% while `wh_old` is above 6.4%;
+- (b) `wh_paper` is above 6.4%;
+- (c) otherwise.
+
+**Extra check (not in the addendum): replicate the paper's own
+no-herding simulation** (p.12–15).
+- Design: 20 stocks, betas 0.5/0.8/1.2/1.5, R_m = −0.5..0.5 step 0.001,
+  500 simulations, `wh_paper` with HC1, two-sided 5% rule.
+- The stated error is "standard normal". But the paper's Figure 5 spans
+  only about ±0.2 with a small gap at 0, which implies a much smaller
+  error SD. So we run a grid of error SDs {1, 0.3, 0.1, 0.03, 0.01}.
+- Purpose: find which setting reproduces the paper's 14.4%, and show
+  how the false-alarm rate depends on the size of the jump relative to
+  the range of market moves.
+- Seed: SeedSequence([20260928, 10, i]).
+
+**Part F addition:**
+- Same markets and seeds as Part F (part codes 6 and 7).
+- New statistics: `wh_paper` base t, `sol1_paper` base t, and
+  `wh_paper` g5/g7 t.
+- g5/g7 use the primary Step 5 WH design (`main_regression.design`, WH
+  form) on the log-return SCSAD, with HC1 standard errors.
+- Real-data values come from the real panel processed the same way.
+
+**Part H addition:**
+- Same markets and seeds as Part H (part code 8).
+- Terms: the `wh_paper` Post term (Solution 2 + R_m³ x Post) and its
+  g5/g7, on the log-return SCSAD.
+- Methods: HC1 (the paper's) plus the original five: NW5, NW21, NW63,
+  NW126, and the bootstrap with B = 999.
+- Real data: the primary spec with HC1 and with the bootstrap (B = 5,000).

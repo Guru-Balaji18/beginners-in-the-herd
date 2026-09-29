@@ -1,4 +1,8 @@
-# Wang & Hudson specification check (Part E) — BLOCKED: paper not available
+# Wang & Hudson specification check (Part E)
+
+> **Update 2026-09-29: the paper is now available** (`wang_hudson_2022.pdf`, the CC-BY submitted
+> manuscript from the Hull repository, 60 PDF pages). Sections E1 and E2 are at the end of this file.
+> The sections below them are kept as written before we had the paper.
 
 **Status (2026-09-28): nothing in this file has been verified against the paper.**
 
@@ -124,3 +128,56 @@ either way:
 If the paper's specification contains nothing that handles the jump, the
 published method would share the flaw (outcome b). If it does, the flaw
 was ours (outcome a).
+
+
+---
+
+## E1 — The paper's exact specification (quoted)
+
+Source: `wang_hudson_2022.pdf`, the author-submitted manuscript
+(CC-BY, Hull repository). Page numbers are **PDF pages of that file**,
+not the journal's pages 790–818.
+
+| # | Item | Quote | PDF page |
+|---|---|---|---|
+| 1 | CSAD | "CSAD_t = (1/N) Σ_{i=1..N} \|R_it − R_mt\|  (Equation 1)" | 3 |
+| 2 | Standard CCK test | "CSAD_t = α + γ1 R_m,t + γ2 \|R_m,t\| + γ3 R²_m,t + ε_t  (Equation 2)" | 3 |
+| 3 | CCK herding rule | "If γ3 is not significant that is taken as evidence of no herding, if γ3 is negative and significant that is evidence of herding and if γ3 is positive and significant that is evidence of anti-herding." | 3 |
+| 4 | Solution 1 (no constant) | "a reasonable way to test for herding is to adopt the standard approach in the literature but constrain the constant in the regression to be zero so that the fitted line goes through the origin of the graph" | 9–10 |
+| 5 | Solution 1 equation | "CSAD_t = γ1 R_m,t + γ2 \|R_m,t\| + γ3 R²_m,t + ε_t" (heading of Table 10) | 26 |
+| 6 | **SCSAD definition** | "SCSAD = CSAD if R_mt > 0 / SCSAD = − CSAD if R_mt < 0" (**R_mt = 0 is not defined**) | 10 |
+| 7 | Why SCSAD, near zero | "when R_mt is close to 0, in 50% of cases SCSAD will be greater than 0 and in 50% of cases it will be less than 0, so there will not be any systematic random bias related to small values of R_mt, and fitted lines will go through the origin." | 10 |
+| 8 | **Solution 2 equation** | "SCSAD_t = α + γ1 R_m,t + γ2 R²_m,t + γ3 R³_m,t + μ_t  (Equation 3)" (**has an intercept**; estimated as `_cons` in Table 11) | 10, 27 |
+| 9 | **Herding rule, Solution 2** | "A negative coefficient on the cubic term will indicate herding." / "we need to have a significantly negative coefficient of the cubic market return to confirm herding behaviour" | 10, 15 |
+| 10 | Solution 3 | Use the standard test only on large market moves, e.g. \|R_m\| ≥ 0.5%, 5%, 10% in the simulation; ≥ 0.5%, 1%, 2%, 3% and the largest 50%, 10%, 5% of \|R_m\| in the data | 11, 16–17, 28–33 |
+| 11 | **Their own no-herding simulation** | Table 1: Solution 2 (SCSAD) "Herding" 14.40%; Solution 1 (no constant) "Herding" 26.20%. Their comment: "they perhaps have a slight bias towards finding herding when it does not exist." | 15–16 |
+| 12 | Simulation design | 20 stocks (betas 0.5, 0.8, 1.2, 1.5; five each), R_m from −0.5 to 0.5 in steps of 0.001 (1,001 observations), error "generated to follow the standard normal distribution", 500 simulations | 12–13 |
+| 13 | **Estimator / standard errors** | "Logarithmic returns and robust regression methods are used throughout." Tables are headed "Robust Regression", report "t statistics in parentheses" and adjusted R², with stars at 10/5/1%. **The estimator is not defined further.** | 23, 25–27 |
+| 14 | Significance level | "At the conventional 5% significance level" | 51 |
+| 15 | Typo in the paper | "whereas a positive coefficient would indicate herding" (should read *anti-herding*) | 15 |
+| 16 | **The jump at R_m = 0** | **Never discussed.** Nothing in the text mentions a jump, discontinuity or sign dummy. The paper's own Figure 5 (zero-herding SCSAD scatter) shows a visible small gap at R_m = 0. | 15 |
+
+## E2 — Line-by-line comparison with our code
+
+| # | Element | Paper | Ours | Same? |
+|---|---|---|---|---|
+| 1 | CSAD formula | Eq. 1, equal-weighted market | `build_csad.py:31-33`, equal-weighted market | **Same** |
+| 2 | SCSAD sign rule | +CSAD if R_m > 0, −CSAD if R_m < 0 | `build_csad.py:37`: +CSAD if R_m ≥ 0 | Same except R_m = 0, which the paper leaves undefined; never happens in our data or simulations |
+| 3 | WH regressors | α, R_m, R_m², R_m³ | `robustness_wang_hudson.py:63,91`: constant, mkt_ret, rm2, rm3 | **Same** |
+| 4 | WH herding sign | γ3 < 0, "significant" | rm3 < 0 | **Same** |
+| 5 | Significance rule | two-sided, "conventional 5%" | registered one-sided 5% (t < −1.645) | Differs; we report both |
+| 6 | Returns | logarithmic | simple (`pct_change`) | **Differs** |
+| 7 | Estimator / SE | "robust regression", undefined | OLS + Newey-West HAC, 5 lags | **Differs** (see D6) |
+| 8 | Post (ChatGPT) interaction | none | `rm3_post` added | Our extension; not part of the paper's test |
+| 9 | Standard CCK regressors | α, **R_m**, \|R_m\|, R_m² | constant, \|R_m\|, R_m² (`robustness_wang_hudson.py:73-78`) | **Differs**: we omit the signed R_m term |
+| 10 | Solution 1 | Eq. 2 without α (incl. R_m) | our D5 `cck_zero_intercept` omitted R_m | **Differs** |
+| 11 | Solution 3 | large-move subsamples | not implemented | Missing |
+| 12 | Jump at R_m = 0 | not handled | not handled | **Same**: neither addresses it |
+
+**Bottom line of E2:** our Wang-Hudson regression, Equation 3 with an
+intercept and a negative cubic meaning herding, **is the paper's
+Solution 2**. The only differences are the return type (log vs simple),
+the standard-error method, and the one-sided vs two-sided rule. None of
+these changes the point estimate's reaction to the jump at zero.
+**The paper does not address the sign jump at R_m = 0**, and neither
+did we.
