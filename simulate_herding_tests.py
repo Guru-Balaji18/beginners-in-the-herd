@@ -338,9 +338,9 @@ def figures(tab, winsorized):
         ax.text(i + 0.2, w * 100 + 1.5, f"{w:.0%}", ha="center", fontsize=8)
     ax.set_xticks(x, [f"{sc}" + chr(10) + SCEN_LABEL[sc] for sc in null.index])
     ax.set_ylabel('% of markets where the test says "herding"')
-    ax.set_ylim(0, 112)
+    ax.set_ylim(0, 135)
     ax.set_title("False alarms when there is NO herding (1,000 markets each)" + chr(10) + note, fontsize=10)
-    ax.legend(loc="upper left", fontsize=8)
+    ax.legend(loc="upper center", ncol=3, fontsize=8)
     fig.tight_layout()
     fig.savefig(RES_DIR / f"sim_size_table_{tag}.png", dpi=200)
     plt.close(fig)
@@ -392,6 +392,31 @@ def summarize():
     return tab, out
 
 
+# Real Step 5 primary g5 t-stats (docs/addendum_2026-09-28.md, results table).
+REAL_G5_T = {"cck": -3.99 / 2.47, "wh": -430.5 / 153.6}
+
+
+def post_term_size():
+    """Deviation D3 (post-hoc, exploratory): herding strength never changes
+    over time in these simulations, so every Post interaction is a true
+    null. How often do the HAC(5) Post t-stats still say 'herding'?"""
+    raw = pd.read_csv(RAW_PATH)
+    rows = []
+    for (w, sc, k), g in raw.groupby(["winsorized", "scenario", "kappa"]):
+        row = {"winsorized": w, "scenario": sc, "kappa": k, "reps": len(g)}
+        for t in ["cck", "wh"]:
+            x = g[f"{t}_post_t"]
+            row.update({f"{t}_post_false_alarm": (x < ONE_SIDED_CRIT).mean(), f"{t}_post_t_sd": x.std(),
+                        f"{t}_post_null_5th_pct": x.quantile(0.05),
+                        f"{t}_real_g5_t_percentile": (x <= REAL_G5_T[t]).mean()})
+        rows.append(row)
+    tab = pd.DataFrame(rows)
+    tab.to_csv(RES_DIR / "sim_post_term_size.csv", index=False)
+    pd.set_option("display.width", 220)
+    print(tab[tab.kappa == 0].round(3).to_string(index=False))
+    return tab
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "summarize"
     if cmd == "calibrate":
@@ -404,5 +429,7 @@ if __name__ == "__main__":
         print(json.dumps(cal["real_unwinsorized"], indent=1))
     elif cmd == "run":
         run_all(workers=int(sys.argv[2]) if len(sys.argv) > 2 else 12)
+    elif cmd == "postsize":
+        post_term_size()
     else:
         summarize()

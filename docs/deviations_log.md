@@ -68,3 +68,45 @@ new numbers, we define the check:
 
 This is labeled post-hoc and exploratory. It does not change any
 registered decision rule.
+
+## D3 — 2026-09-28: post-hoc check of the Post-interaction terms in the Part B simulation (exploratory; found after the full run)
+
+**Why.** In every simulated market the herding strength kappa is
+constant over time, so each Post interaction (R_m^2 x Post for CCK,
+R_m^3 x Post for Wang-Hudson) is a **true null**. B1 put the Post dummy in
+so the regression call matched the real one, but B6 wrote no decision
+rule for it. This check was added after seeing the results and is
+labeled exploratory. The code is `py simulate_herding_tests.py postsize`
+and the output is `results/sim_post_term_size.csv`.
+
+**Result (kappa = 0, 1,000 markets each).**
+
+| Pipeline | Scenario | CCK Post: false alarms | CCK Post: SD of t | WH Post: false alarms | WH Post: SD of t |
+|---|---|---|---|---|---|
+| winsorized (registered) | S1 | 13.0% | 1.92 | 26.6% | 2.82 |
+| winsorized (registered) | S5 | 14.8% | 2.02 | 34.2% | 3.23 |
+| no winsorization | S1 | 7.2% | 1.17 | 35.0% | 3.23 |
+| no winsorization | S5 | 11.7% | 1.67 | 37.8% | 3.32 |
+
+At the nominal 5% level, a well-behaved t-statistic has a standard
+deviation of about 1. Here it is 1.2 to 3.3. The HAC(5) standard errors
+on the Post interactions are therefore too small, by a factor of about 2
+for CCK and about 3 for Wang-Hudson. With 21-day blocks, a whole crisis
+episode such as March 2020 can land entirely before or entirely after
+the break date. That changes the Post slope far more than the HAC
+standard error allows for.
+
+**What this implies for H1 (with caveats).** The real Step 5 g5 is a
+Post x **High** interaction, which the simulation doesn't contain. It
+rests on fewer days, so if anything it is noisier. As a rough benchmark,
+we compared the real g5 t-statistics to the simulated null
+distribution of the Post t-statistics (S5, winsorized):
+- CCK g5: t = -1.62. It is at the **15th** percentile of the null.
+  The 5th-percentile critical value is -3.22.
+- Wang-Hudson g5: t = -2.80, one-sided p = 0.003. It is at the **20th**
+  percentile of the null. The 5th-percentile critical value is -7.85.
+
+Neither real g5 is unusual compared with what these tests produce when
+nothing changes at the break date. This does not change any registered
+decision. Part C, the placebo break-date test, is the registered check
+of the same question on real data.
