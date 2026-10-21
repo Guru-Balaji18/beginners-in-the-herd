@@ -258,3 +258,21 @@ We reran the paper's no-herding design: 20 stocks, R_m from -0.5 to 0.5,
   on that pipeline.
 - Solution 3 on the per-day-winsorized panel (post-hoc, D6 note):
   t = -0.02 and -1.19, i.e. **no herding**.
+
+## Two readings of "robust regression": both fail
+
+The paper says only that "robust regression methods are used
+throughout" (PDF p.23) and never names the estimator. It can be read two
+ways, and we tested both on the same no-herding markets (Part E seeds):
+
+| Reading | Where | Solution 2 false alarms |
+|---|---|---|
+| OLS with White (HC1) standard errors | D6, commit c20989a | **100%** in every scenario and pipeline |
+| Huber M-estimator (statsmodels RLM, HuberT t = 1.345, MAD scale) | D7, commit d447f34 | **100%** [Wilson 95% CI 99.6–100] in S1 and S5, winsorized and unwinsorized |
+
+Both readings give 100% under the one-sided 5% rule and under the
+paper's two-sided rule. The over-rejection therefore does not depend on
+which estimator the paper meant. It comes from the jump in SCSAD at
+R_m = 0, which shifts every observation near zero rather than a few
+outliers. The robust fit gives a more extreme median t than OLS (−29 to
+−32 vs −7 to −13); see D7's post-hoc note.

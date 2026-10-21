@@ -597,6 +597,9 @@ added, entry measured in the 52 weeks before ChatGPT for Step 4.
     calibration is robust (S2 4.6%, S4 3.7%).
   - H: HC1 SEs false-alarm on g5 52%, bootstrap 18%.
   - Docs: docs/wang_hudson_spec.md.
+  - D7 (2026-10-21, d447f34): fitting Solution 2 with a robust M-estimator
+    (RLM, Huber) also false-alarms 100% in S1/S5, winsorized and not. Both readings
+    of "robust regression" fail, so the loophole is closed.
 - **Part E, paper-independent steps (D5, 2026-09-29):**
   - Our WH false herding is caused entirely by the SCSAD jump at
     Rm = 0: the step alone reproduces 100% of the cubic, and adding

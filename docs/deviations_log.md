@@ -295,3 +295,41 @@ Runs: κ = 0; S1 and S5, winsorized and unwinsorized; 1,000 markets each; same s
 Prediction: false alarms stay above 50% in all four runs, because the bias comes from the jump c·sign(R), which shifts every observation near R_m = 0 rather than a few outliers.
 Decision rule: all four runs ≥ 50% → the loophole is closed. Any run ≤ 10% → RLM avoids the bias there; report it, add RLM as a comparison method, and narrow the claim to the OLS reading for that setting. Between 10% and 50% → report the rates as they are.
 Validation first: test_rlm.py must recover known coefficients on clean data and on data with injected outliers.
+
+**D7 — Outcome and run notes (2026-10-21, post-run)**
+
+- **Result:**
+  - False alarms were **100% [Wilson 95% CI 99.6–100]** in all four runs
+    (S1/S5 x winsorized/unwinsorized), under both the one-sided 5% rule
+    and the paper's two-sided rule.
+  - The prediction held, and the decision rule "all four runs ≥ 50% →
+    the loophole is closed" was met.
+  - Code and results are in commit d447f34.
+- **Run note 1:**
+  - The first run stopped with an out-of-memory error after 3,676
+    markets. The saved rows were kept and the run was resumed with 6
+    workers.
+  - The final file has 4,000 rows, 1,000 per run, with no duplicates.
+  - The resumed markets are **identical to Part E's**. Each market's
+    seed depends only on the scenario and the market index:
+    `simulate_herding_tests.py:226`,
+    `SeedSequence([BASE_SEED, SCEN_INDEX[scenario], rep])`.
+  - The RLM run (`wang_hudson_paper.py:418`) and Part E
+    (`wang_hudson_paper.py:121`) make the same `sim.rng_for(s, rep)`
+    call.
+  - Check: the resumed rows (S5 unwinsorized, reps 676–999) reproduce
+    Part E's stored OLS t-statistics exactly for reps 676, 826 and 999.
+- **Run note 2:**
+  - 49% of RLM fits stopped at statsmodels' default limit of 50
+    iterations. The default was kept, as D7 specifies.
+  - Refitting four markets with maxiter = 1,000 gave the same
+    t-statistics to three decimals.
+  - The least negative t across all 4,000 markets was −18.4, so
+    convergence cannot change any decision.
+- **Post-hoc observation (exploratory, not pre-registered):**
+  - RLM's median t (−29 to −32) is more negative than OLS with robust
+    SEs (−7 to −13) on the same markets.
+  - A likely explanation: Huber weighting down-weights large-|R_m| days,
+    where noise grows with the size of the market move. The fit then
+    relies more on small-|R_m| days, which is where the jump at zero
+    sits.
