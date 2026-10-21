@@ -1,0 +1,6 @@
+{
+ "decision_one_sided": "all four runs >= 50% -> the loophole is closed",
+ "decision_paper_two_sided": "all four runs >= 50% -> the loophole is closed",
+ "max_rlm_iterations": 50,
+ "n_rows": 4000
+}

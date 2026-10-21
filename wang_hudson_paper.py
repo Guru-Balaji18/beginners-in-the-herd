@@ -397,9 +397,80 @@ def real():
     print(json.dumps(out, indent=1))
 
 
+# =====================================================================
+# D7 (pre-registered in f15b546): Solution 2 fitted with a robust M-estimator
+# =====================================================================
+RLM_RAW = RES_DIR / "wh_rlm_size.csv"
+RLM_RUNS = [(w, s) for s in ["S1", "S5"] for w in [True, False]]
+
+
+def wh_paper_rlm(c):
+    """Eq.3 on log-return SCSAD (Rm = 0 days dropped), statsmodels RLM,
+    HuberT(t = 1.345), default MAD scale and default (H1) covariance."""
+    from statsmodels.robust.norms import HuberT
+    from statsmodels.robust.robust_linear_model import RLM
+    ok = c["scsad"].notna()
+    return RLM(c.loc[ok, "scsad"], add_constant(eq3_x(c[ok])), M=HuberT(t=1.345)).fit()
+
+
+def _rlm_one(task):
+    w, s, k, rep = task
+    R, _ = sim.simulate_returns(_CAL, s, k, sim.rng_for(s, rep), winsorize=w)
+    res = wh_paper_rlm(log_csad(R, _CAL["dates"]))
+    return {"winsorized": w, "scenario": s, "kappa": k, "rep": rep, "rlm_rm3_coef": float(res.params["rm3"]),
+            "rlm_rm3_t": float(res.tvalues["rm3"]), "rlm_iterations": int(res.fit_history["iteration"])}
+
+
+def rlm_run(workers=12):
+    todo = [(w, s, 0, r) for w, s in RLM_RUNS for r in range(sim.REPS)]
+    _pool_run(RLM_RAW, ["winsorized", "scenario", "kappa", "rep"], todo, _rlm_one, _init, workers, every=100)
+
+
+def wilson(k, n, z=1.959964):
+    p = k / n
+    d = 1 + z ** 2 / n
+    mid, half = (p + z ** 2 / (2 * n)) / d, z * np.sqrt(p * (1 - p) / n + z ** 2 / (4 * n ** 2)) / d
+    return max(0.0, mid - half), min(1.0, mid + half)
+
+
+def rlm_summary():
+    raw = pd.read_csv(RLM_RAW)
+    ols = pd.read_csv(E5_RAW)[["winsorized", "scenario", "kappa", "rep", "wh_paper_t"]]
+    raw = raw.merge(ols, on=["winsorized", "scenario", "kappa", "rep"], how="left")
+    rows = []
+    for w, s in RLM_RUNS:
+        g = raw[(raw.winsorized == w) & (raw.scenario == s)]
+        n = len(g)
+        row = {"scenario": s, "winsorized": w, "kappa": 0, "n_markets": n,
+               "median_t_rlm": float(g["rlm_rm3_t"].median()), "median_t_ols_hc1": float(g["wh_paper_t"].median())}
+        for rule, crit in [("one_sided", sim.ONE_SIDED_CRIT), ("paper_two_sided", PAPER_CRIT)]:
+            k = int((g["rlm_rm3_t"] < crit).sum())
+            lo, hi = wilson(k, n)
+            row.update({f"false_alarm_{rule}": k / n, f"ci95_lo_{rule}": lo, f"ci95_hi_{rule}": hi})
+        rows.append(row)
+    tab = pd.DataFrame(rows)
+
+    def decide(rates):
+        if all(r >= 0.50 for r in rates):
+            return "all four runs >= 50% -> the loophole is closed"
+        if any(r <= 0.10 for r in rates):
+            return ("a run <= 10% -> RLM avoids the bias there; report it, add RLM as a comparison method, "
+                    "and narrow the claim to the OLS reading for that setting")
+        return "between 10% and 50% -> report the rates as they are"
+    out = {"decision_one_sided": decide(tab["false_alarm_one_sided"]),
+           "decision_paper_two_sided": decide(tab["false_alarm_paper_two_sided"]),
+           "max_rlm_iterations": int(raw["rlm_iterations"].max()), "n_rows": int(len(raw))}
+    tab.to_csv(RES_DIR / "wh_rlm_size_summary.csv", index=False)
+    (RES_DIR / "wh_rlm_decision.json").write_text(json.dumps(out, indent=1))
+    pd.set_option("display.width", 220)
+    print(tab.round(4).to_string(index=False))
+    print(json.dumps(out, indent=1))
+
+
 if __name__ == "__main__":
     RES_DIR.mkdir(exist_ok=True)
     cmd = sys.argv[1] if len(sys.argv) > 1 else "e5summary"
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 12
     {"e5run": lambda: e5_run(w), "e5summary": e5_summary, "replicate": replicate, "frun": lambda: f_run(w),
-     "fsummary": f_summary, "hrun": lambda: h_run(w), "hsummary": h_summary, "real": real}[cmd]()
+     "fsummary": f_summary, "hrun": lambda: h_run(w), "hsummary": h_summary, "real": real,
+     "rlmrun": lambda: rlm_run(w), "rlmsummary": rlm_summary}[cmd]()
