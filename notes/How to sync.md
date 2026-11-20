@@ -23,7 +23,8 @@ person pulls the other's changes and pushes their own. Back to [[Home]].
    - pull when Obsidian starts;
    - pull every 10 minutes;
    - commit-and-sync is manual.
-5. **Optional:** add a hotkey for *Git: Commit-and-sync* (*Settings → Hotkeys*).
+5. **Check the settings applied.** Installing the plugin can rename the shared settings file to `.obsidian/plugins/obsidian-git/data.json.bak`. If *Settings → Git* doesn't show "Pull on startup" on and "Auto pull interval" at 10, close Obsidian, rename `data.json.bak` back to `data.json`, and reopen.
+6. **Optional:** add a hotkey for *Git: Commit-and-sync* (*Settings → Hotkeys*).
 
 ## Every session
 1. **Pull first.** Obsidian does it at startup. In a terminal or Claude Code: `git pull`.

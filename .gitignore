@@ -11,3 +11,6 @@ __pycache__/
 .obsidian/plugins/*/manifest.json
 .obsidian/plugins/*/styles.css
 .trash/
+.obsidian/plugins/*/data.json.bak
+.obsidian/plugins/obsidian-git/obsidian_askpass.sh
+.obsidian/appearance.json
