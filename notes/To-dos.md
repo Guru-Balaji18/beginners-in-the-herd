@@ -21,8 +21,16 @@ it. Back to [[Home]].
 ## Research
 - [x] Per-stock Google Trends attention data: dropped (2026-11-19, D8)
 - [x] Run the Step 8 analyses (D8, 2026-11-19)
-- [ ] Ask Mrs. Kulkarni whether to submit [[Research Plan draft]] as a revised plan or the original plus an addendum (the last ⚠ item)
+- [x] Reformat the research plan as the original plan plus a dated addendum (`Research_Plan_and_Addendum_Balaji_Sharma.docx`, 2026-11-20)
+- [ ] Read and edit the plan and addendum, especially the AI disclosure in Section D
+- [ ] Keep Mrs. Kulkarni's AI guidance in writing; optionally email the SSEF SRC (flscifair.src@gmail.com) to confirm the no-data rule covers the addendum
+- [ ] Upload the plan, forms (1, 1A, 1B, 2A, 3) and abstract to Hillsborough by **Jan 11, 2027**
 - [ ] Timestamp proof: pushing to GitHub records push times; also consider registering on OSF/AsPredicted or emailing the addenda to Mrs. Kulkarni
+
+## Write-up
+- [x] Draft the abstract ([[Abstract draft]], 249 words, 2026-11-20)
+- [ ] Read the abstract together and finalize it
+- [ ] Write the board text sections and practice judge questions
 
 ## Board visuals ([[Board figures]])
 - [ ] Review the six first drafts together; decide board layout and print size

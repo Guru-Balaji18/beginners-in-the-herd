@@ -17,7 +17,8 @@ Statistics) · Regional STEM Fair **Feb 17, 2027**.
 - [[UPDATE log]]: what happened in each session, newest first
 - [[To-dos]]: open tasks
 - [[How to sync]]: Obsidian + GitHub setup and routine
-- [[Research Plan draft]]: combined research plan (draft, ⚠ items need decisions)
+- Research Plan and Addendum: `Research_Plan_and_Addendum_Balaji_Sharma.docx` / `.pdf` (2026-27 ISEF Form 1A format; format research in `reports/ISEF research plan format.md`)
+- [[Abstract draft]]: abstract for the fair's Abstract form (249 words)
 
 ## Research record (pre-registration trail, `docs/`)
 - [[addendum_2026-09-28]]: Part A, the pre-registration for Parts B–D

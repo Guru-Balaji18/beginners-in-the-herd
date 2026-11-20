@@ -25,6 +25,21 @@ UPDATE: [one-line title]
 
 ---
 
+## 2026-11-20 — Guru (with Claude Code)
+UPDATE: Research plan reformatted in the official 2026-27 format, board figures pushed, abstract drafted
+- **What I did:**
+  - Researched the ISEF, SSEF and Hillsborough plan rules, judging criteria and winning examples (`reports/ISEF research plan format.md`).
+  - Rebuilt the plan as `Research_Plan_and_Addendum_Balaji_Sharma.docx` / `.pdf`:
+    - Part 1: the original 08/31/26 plan in Form 1A order (A to E);
+    - Part 2: a dated addendum with 17 changes and their reasons, methods only;
+    - Section D: an AI disclosure.
+  - Deleted the old results-containing plan draft and its PDF.
+  - Pushed the board figures and drafted the abstract (249 words).
+- **What the result was:**
+  - SSEF does not allow data or conclusions in the plan, and changes go in an addendum.
+  - The 2026-27 ISEF rules also restrict generative AI from writing the plan, abstract or poster. Our research teacher told us to use AI, so keep that guidance in writing and disclose AI use on Form 2A and in Section D.
+- **What's next:** edit the plan and addendum; upload the plan, forms and abstract to Hillsborough by Jan 11, 2027.
+
 ## 2026-11-19 — Guru (with Claude Code)
 UPDATE: Step 8 analyses run (D8); research plan finalized except one question
 - **What I did:**
@@ -40,7 +55,7 @@ UPDATE: Step 8 analyses run (D8); research plan finalized except one question
 
 ## 2026-11-19 — Guru (with Claude Code)
 UPDATE: Research plan drafted
-- **What I did:** drafted the combined research plan in [[Research Plan draft]], following the original plan's section order.
+- **What I did:** drafted the combined research plan (since replaced by `Research_Plan_and_Addendum_Balaji_Sharma.docx`), following the original plan's section order.
   - It keeps the original question, rationale and H1–H3 word for word.
   - It adds a background section: the original plan, what happened, why it was revised, and the new goal and hypothesis.
   - It adds Question 2 and H4 (can the herding tests be trusted), plus the procedures as actually carried out, the remaining analyses, a who-did-the-work disclosure (we did the research; Claude Code completed it under our direction) and a progress appendix.
