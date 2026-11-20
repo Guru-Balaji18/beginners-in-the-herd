@@ -53,6 +53,7 @@ Read this first in any new session. Then read the latest entries in
 | Parts C/D | `placebo_break_dates.py` | Placebo break dates, year FE, plan-literal High vs Low, done |
 | Parts E–H | `docs/addendum2_2026-09-28.md`; `wang_hudson_variants.py`, `wang_hudson_paper.py`, `calibrated_test.py`, `mechanisms_diagnostics.py`, `robust_se.py`, `se_validation.py` | Done |
 | D7 | `docs/addendum3_2026-10-21_rlm.md`, `test_rlm.py` | Robust-regression (RLM) check of Wang-Hudson, done |
+| D8 (Step 8) | `docs/addendum4_2026-11-19_step8.md`, `step8_analyses.py`, `test_step8.py` | Effect size, GPT-4 date, without big tech, liquidity-weighted market: done |
 
 `data/` is not in git (759 MB). It has to be rebuilt with the scripts or copied from Guru's machine.
 
@@ -79,6 +80,7 @@ Read this first in any new session. Then read the latest entries in
 - **Part F (calibrated test):** the real data are judged against simulated no-herding markets. Nothing is significant: g5 calibrated p = .12 CCK, .39 WH.
 - **Part G:** plain-English mechanisms are in `docs/mechanisms.md`. Per-day winsorization fixes the cleaning artifact.
 - **Part H:** longer Newey-West lags make things worse. The 21-day block bootstrap fixes CCK but not WH. With the bootstrap, g5 has one-sided p = .20 (CCK).
+- **Step 8 / D8 (2026-11-19):** the GPT-4 date, dropping the 7 largest tech companies and a liquidity-weighted market all leave g5 not significant (CCK bootstrap p = 0.21 / 0.21 / 0.33). g5 is about −25 bp on a 2-SD market day, with a 95% interval from −55 to +60.
 - **Takeaway:** every route to H1 now points the same way. The lead contribution is the **CCK vs Wang-Hudson** story: why a published herding test gives false alarms, shown by simulation, mechanism and replication of the paper.
 
 ## 5. Plan (decided 2026-09-28): honest reframing

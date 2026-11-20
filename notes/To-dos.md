@@ -19,8 +19,9 @@ it. Back to [[Home]].
 - [ ] Decide how Yuvraj gets `data/` (759 MB, not in git): rebuild it with the scripts, or Guru shares a zip
 
 ## Research
-- [ ] Finish or drop the per-stock Google Trends attention data (23/184 batches)
-- [ ] Finish the combined research plan: resolve the ⚠ items in [[Research Plan draft]] and ask Mrs. Kulkarni whether to submit a revised plan or the original plus an addendum
+- [x] Per-stock Google Trends attention data: dropped (2026-11-19, D8)
+- [x] Run the Step 8 analyses (D8, 2026-11-19)
+- [ ] Ask Mrs. Kulkarni whether to submit [[Research Plan draft]] as a revised plan or the original plus an addendum (the last ⚠ item)
 - [ ] Timestamp proof: pushing to GitHub records push times; also consider registering on OSF/AsPredicted or emailing the addenda to Mrs. Kulkarni
 
 ## Board visuals ([[Board figures]])

@@ -6,17 +6,15 @@ tags: [plan, draft]
 created: 2026-11-19
 updated: 2026-11-19
 status: draft
-summary: Draft of the combined, standalone research plan (Nov 2026). Items marked ⚠ need a decision from Guru and Yuvraj before submission.
+summary: Draft of the combined, standalone research plan (Nov 2026). One item (⚠) still needs a decision before submission.
 ---
 # Research Plan (draft, November 2026)
 
 > [!warning] Draft for Guru and Yuvraj to edit
-> Everything marked **⚠** needs your decision before this is submitted.
-> Before submitting, ask Mrs. Kulkarni whether the fair wants a revised
-> plan, or the original plan plus an addendum. Fair rules usually expect
-> the plan to be written before the research, with later changes
-> documented separately. The appendix at the end lists what has already
-> been done. Delete it if the fair's template does not allow results.
+> ⚠ Before submitting, ask Mrs. Kulkarni whether the fair wants a
+> revised plan, or the original plan plus an addendum. Fair rules usually
+> expect the plan to be written before the research, with later changes
+> documented separately.
 > Back to [[Home]] · sources: [[Handoff]], [[deviations_log]], [[wang_hudson_spec]], [[mechanisms]].
 
 **Regional Science and Engineering Fair: Research Plan**
@@ -26,7 +24,7 @@ summary: Draft of the combined, standalone research plan (Nov 2026). Items marke
 | Names | Yuvraj Sharma and Guru Balaji |
 | School | Middleton High School, Tampa, Florida |
 | Category | Mathematics, subcategory Statistics |
-| Research teacher | ⚠ [teacher name] |
+| Research teacher | Mrs. Kulkarni |
 
 ## Title and questions
 
@@ -78,16 +76,23 @@ Before running anything more, we wrote down a plan for checking these results an
 - With standard errors that passed our simulation check, g5's one-sided p-value is 0.20 in the standard test. Judged against simulated no-herding markets, it is 0.12 (standard) and 0.39 (Wang-Hudson).
 - We obtained Wang and Hudson's paper and confirmed that our test is exactly their Equation 3. Their own method, under both possible readings of their estimator, also reports herding in 100% of markets that have none. The cause is a jump in their signed measure at a market return of zero. Their own simulation hid the problem because its market moves went up to ±50% in a day.
 
+#### Final checks (November 19, 2026)
+We wrote down the last planned checks and pushed them to GitHub before running them (deviations log entry D8). None of them changed the answer:
+- Using the GPT-4 release date (March 14, 2023) instead of November 30, 2022 gave the same result (standard test, one-sided p = 0.21 with the standard errors that passed our simulation check).
+- Leaving out the seven largest technology companies gave the same result (p = 0.21).
+- Measuring dispersion around a liquidity-weighted market made g5 smaller (p = 0.33).
+- On a day when the market moves 2 standard deviations (2.5%), g5 corresponds to about −25 basis points of dispersion, roughly 11% of normal dispersion on such days. Its 95% interval runs from −55 to +60 basis points, so the data cannot rule out zero.
+
 ### Why we revised the plan
 - The data forced design changes, and the plan should describe the study we actually ran.
 - Question 1 now has an answer: the evidence does not support H1, H2 or H3. We keep the hypotheses exactly as written and report them as tested.
 - The checking turned up a result we did not plan for and now think matters more: one of the two published herding tests gives false alarms on daily stock data, for a reason we can show and explain. That became Question 2.
-- Every change is dated and recorded in our deviations log (entries D1 to D7), so a reader can see what was planned and when.
+- Every change is dated and recorded in our deviations log (entries D1 to D8), so a reader can see what was planned and when.
 
 ### Our new goal and hypothesis
 Our goal now is to find out whether the standard herding tests can be trusted on daily stock data, to explain any failure in plain terms, and to answer Question 1 only with methods that pass that check.
 
-The new hypothesis is H4: a valid test, run at the 5% level, reports herding in about 5% of simulated markets that have no herding. Together with it, we predicted on September 28, 2026, before running any simulations, that the Wang-Hudson test would fail this check because of the jump at zero. Both are stated in full under Hypotheses below. H1 to H3 stay unchanged. The analyses still to run (Step 8) test whether the answer to Question 1 changes when we measure effect size, use the GPT-4 release date, or leave out the largest technology stocks.
+The new hypothesis is H4: a valid test, run at the 5% level, reports herding in about 5% of simulated markets that have no herding. Together with it, we predicted on September 28, 2026, before running any simulations, that the Wang-Hudson test would fail this check because of the jump at zero. Both are stated in full under Hypotheses below. H1 to H3 stay unchanged. The last analyses (Step 8) checked whether the answer to Question 1 changes with the effect size, the GPT-4 release date, the largest technology stocks or the way the market return is weighted.
 
 ## Rationale
 
@@ -165,7 +170,7 @@ CSAD_t = (1/N_t) × Σ_i |R_i,t − R_m,t|
 
 Under standard asset pricing with no herding, CSAD rises roughly in line with the size of the market move; herding makes it flatten or fall on big-move days. We also compute the Wang and Hudson (2024) signed version, SCSAD_t = +CSAD_t on days when R_m,t > 0 and −CSAD_t when R_m,t < 0, used in their regression SCSAD_t = α + γ1·R_m,t + γ2·R_m,t² + γ3·R_m,t³, where a negative γ3 indicates herding.
 
-⚠ The Christie and Huang (1995) standard deviation measure and the rolling 21-day average pairwise correlation are not yet computed. Decide whether to add them (Step 8) or drop them.
+We do not compute the Christie and Huang (1995) standard deviation measure or the rolling pairwise correlation. Question 2 already compares two herding tests in depth, the Christie-Huang measure is the earlier and less powerful form of the same idea, and the pairwise correlation has no no-herding benchmark in our framework.
 
 ### Step 3. Build the new investor entry index
 1. Collect four entry proxies: weekly Google Trends volume for beginner investing queries, Interactive Brokers monthly net new accounts, and Robinhood and Schwab quarterly funded accounts.
@@ -178,7 +183,7 @@ Under standard asset pricing with no herding, CSAD rises roughly in line with th
 This index measures new account creation and beginner search interest, not anyone's actual financial literacy. We treat it as a proxy and say so.
 
 ### Step 4. Split stocks by retail attention
-1. Score each stock on its off-exchange share of trading volume (FINRA) and the inverse of its institutional ownership (13F filings). The planned third measure, each stock's own Google Trends volume, could not be collected because Google limits the number of requests (only 23 of 184 batches completed). ⚠ Confirm the decision to drop it.
+1. Score each stock on its off-exchange share of trading volume (FINRA) and the inverse of its institutional ownership (13F filings). The planned third measure, each stock's own Google Trends volume, could not be collected because Google limits the number of requests (only 23 of 184 batches completed), so we dropped it.
 2. Sort stocks into high, middle and low attention thirds (and, as a check, halves).
 3. Compute CSAD separately within each group, measured against the same overall market return, and regress the difference between the high and low groups on the main model's terms. This gives the high-minus-low difference in the key coefficient directly, with a standard error that accounts for both groups being observed on the same days.
 
@@ -191,48 +196,45 @@ CSAD_t = g0 + g1·|R_m,t| + g2·R_m,t² + g3·R_m,t²·Post_t + g4·R_m,t²·Hig
 - g7 is the matching term for low-entry periods; H2 predicts it is not negative.
 - Controls. VIX, a top-decile market-move day indicator, calendar-month dummies, a linear time trend, and indicators for FOMC announcement days and CPI release days.
 - The Wang-Hudson version replaces CSAD with SCSAD and R_m,t² with R_m,t³ in the interaction terms. It runs without the controls, as in their paper.
-- Primary specification,: Fixed before examining regression results: Robinhood excluded, growth rates, High/Low tercile dummies with the middle third as baseline, expanding-window cutoffs.
+- Primary specification. Fixed before examining regression results: Robinhood excluded, growth rates, High/Low tercile dummies with the middle third as baseline, expanding-window cutoffs.
 - Robustness variants. With and without Robinhood, growth rates vs raw counts, dummy vs continuous index, and expanding vs full-sample cutoffs. That gives 12 specifications per test, plus one version of the standard primary model with lower-order terms added: 25 regressions in total.
 
 ### Step 6. Is any effect specific to ChatGPT?
-1. **Placebo break dates.** Rerun the primary model with the "ChatGPT date" moved to every month-end from June 2017 to June 2025, skipping six months on either side of the real date (85 fake dates). If the real g5 is not more extreme than 95% of the fake-date values, the effect is not specific to ChatGPT's release.
-2. **Calendar check.** After November 2022, the entry groups fall almost entirely into separate years. So rerun the model with year fixed effects, first for the level and then also for year-specific R_m,t² slopes, and measure how much High/Low variation is left within years.
-3. **Plain High vs Low comparison.** Compare high-entry days directly against low-entry days, with middle days dropped. This is the most direct version of H1.
-4. **Multiple testing.** Correct the family of tests in this step with the Holm-Bonferroni method.
+1. Placebo break dates. Rerun the primary model with the "ChatGPT date" moved to every month-end from June 2017 to June 2025, skipping six months on either side of the real date (85 fake dates). If the real g5 is not more extreme than 95% of the fake-date values, the effect is not specific to ChatGPT's release.
+2. Calendar check. After November 2022, the entry groups fall almost entirely into separate years. So rerun the model with year fixed effects, first for the level and then also for year-specific R_m,t² slopes, and measure how much High/Low variation is left within years.
+3. Plain High vs Low comparison. Compare high-entry days directly against low-entry days, with middle days dropped. This is the most direct version of H1.
+4. Multiple testing. Correct the family of tests in this step with the Holm-Bonferroni method.
 
 ### Step 7. Can the herding tests be trusted? (Question 2)
-1. **Monte Carlo simulation.** Build simulated markets that look like ours:
+1. Monte Carlo simulation. Build simulated markets that look like ours:
    - real market returns resampled in 21-day blocks;
    - stock betas and volatilities taken from real stocks;
    - five scenarios, from textbook (S1: equal betas, normal shocks) to realistic (S5: real betas, fat-tailed shocks, volatility that rises with the market move).
    - Herding is added with strength κ through R_i,t = R_m,t + (β_i·R_m,t + ε_i,t − R_m,t)·h_t, where h_t = 1/(1 + κ·R_m,t²). This pulls stocks toward the market more on big-move days; κ = 0 means no herding.
    - Run both tests on 1,000 markets for each scenario and each κ in {0, 3, 10, 30, 100, 300, 1000, 3000}, with and without winsorization. That is 80,000 simulated markets.
    - Count how often each test reports herding.
-2. **Check against the source.** Compare our Wang-Hudson code line by line with the published paper and quote its exact specification. Build "paper-exact" versions of each test the paper proposes. Rerun the simulation with them, and rerun the paper's own simulation design. The paper's estimator is described only as "robust regression", so test both readings: OLS with heteroskedasticity-robust standard errors, and a Huber M-estimator.
-3. **Explain the mechanisms.** On single simulated markets, plot dispersion against the market return with each test's fitted curve, to show in plain terms why a test fails when it does.
-4. **Simulation-calibrated test.** Instead of the textbook cutoff, judge the real t-statistic against its distribution in 2,000 fresh simulated no-herding markets calibrated to our data. Validate on held-out markets, and check how much the answer depends on which scenario the simulation assumes.
+2. Check against the source. Compare our Wang-Hudson code line by line with the published paper and quote its exact specification. Build "paper-exact" versions of each test the paper proposes. Rerun the simulation with them, and rerun the paper's own simulation design. The paper's estimator is described only as "robust regression", so test both readings: OLS with heteroskedasticity-robust standard errors, and a Huber M-estimator.
+3. Explain the mechanisms. On single simulated markets, plot dispersion against the market return with each test's fitted curve, to show in plain terms why a test fails when it does.
+4. Simulation-calibrated test. Instead of the textbook cutoff, judge the real t-statistic against its distribution in 2,000 fresh simulated no-herding markets calibrated to our data. Validate on held-out markets, and check how much the answer depends on which scenario the simulation assumes.
 5. **Standard errors.**
    - Compare Newey-West standard errors (5, 21, 63 and 126 lags) and a 21-day moving-block bootstrap.
    - Check each on simulated markets in which the ChatGPT-date terms are truly zero, counting how often each method calls them "significant".
    - Use the best-calibrated method for the real data.
 
-### Step 8. Remaining analyses before the fair
-⚠ Choose which of these to run. Each one gets a dated entry in the deviations log, committed before its code runs.
+### Step 8. Final analyses
+These were pre-registered as deviations-log entry D8 and pushed to GitHub before any code was written. Each uses the primary specification, both tests, Newey-West standard errors and the 21-day block bootstrap, and has its own decision rule:
+1. Effect size. Convert g5 into basis points of dispersion for a market move of 2 standard deviations, with a bootstrap 95% interval. Following the original plan, an effect smaller than 1 basis point is called economically negligible.
+2. Alternative break date. Set the "ChatGPT date" to the GPT-4 release (March 14, 2023), and compare that g5 with the placebo dates from Step 6.
+3. Leave out the seven largest technology companies (Apple, Microsoft, Alphabet's two share classes, Amazon, NVIDIA, Meta and Tesla), since index concentration in the AI rally can compress dispersion by itself.
+4. Measure dispersion around a liquidity-weighted market return (weights are price times volume, a proxy, since true market caps are not in our data).
+5. Correct the three robustness tests (items 2 to 4) together with the Holm-Bonferroni method.
 
-| Analysis | Recommendation | Why |
-|---|---|---|
-| Effect size: implied change in CSAD, in basis points, for a 2-standard-deviation market move in each regime | **Run** | Tells judges whether any coefficient matters in practice |
-| Alternative break date: GPT-4 (March 14, 2023) | **Run** | Cheap with the existing placebo code |
-| Exclude the seven largest technology stocks | **Run** | Index concentration in the AI rally can compress dispersion by itself |
-| Value-weighted market return | Optional | Already built in the panel code |
-| Christie-Huang CSSD and pairwise correlation | Optional | Secondary measures; Question 2 already compares two tests |
-| Unknown-break-date (sup-Wald) test | Optional | The placebo grid already answers most of the same question |
-| International markets, GARCH volatility control | Drop | Large new data effort for little gain at this stage |
+Dropped, with reasons recorded in D8: an unknown-break-date (sup-Wald) test, because the placebo grid already asks whether the break is special; international markets and a GARCH volatility control, which need large new data work for little gain.
 
 ### Step 9. Documentation
 - Version control. Every script, test and result is kept in a version-controlled repository with dated commits, now public at github.com/Guru-Balaji18/beginners-in-the-herd.
 - Pre-registration routine. Each new analysis is written down first, in a dated addendum or a numbered deviations-log entry, and committed alone. The code is committed next, and the results last. GitHub records push times from November 19, 2026. Earlier ordering rests on the local commit history, so we describe it that way and do not present it as independently verified.
-- Deviations log. Every specification run, including failed ones, and every change from the original design is recorded with its date (entries D1–D7).
+- Deviations log. Every specification run, including failed ones, and every change from the original design is recorded with its date (entries D1 to D8).
 - Validation first. Each analysis has a test that injects known synthetic values and checks that the code recovers them before it touches real data.
 - AI disclosure. We used an AI assistant, Claude Code, to write and run the code and to draft text, as described at the start of Procedures.
 
@@ -298,19 +300,3 @@ Visualizations planned for the board:
 - White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. *Econometrica*, 48(4), 817–838.
 - Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. *Journal of the American Statistical Association*, 22(158), 209–212.
 
----
-
-## Appendix: progress record (as of November 19, 2026)
-
-⚠ Delete this appendix if the fair's template does not allow results in the plan. Every number below comes from the files in `results/` and `data/step5_main_results.csv`.
-
-| Step | Status | Key result |
-|---|---|---|
-| 1–4 Data | Done | 2,260,838 stock-days, 1,280 stocks, 2,678 days; entry index and attention split built |
-| 5 Main model | Done | Primary g5 = −3.99 (standard test, one-sided p = 0.053) and −430.5 (Wang-Hudson, p = 0.003). The Post×Low term is also negative, contradicting H2. 10 of the 25 regressions give a significant g5: 6 negative, 4 positive |
-| 6 Placebo / calendar | Done | Real g5 is ordinary among 84 usable fake dates (empirical p = 0.43 standard, 0.70 Wang-Hudson). Year-specific slopes remove it (two-sided p = 0.27, 0.39). The plain High-vs-Low comparison gives positive g5 (+2.43, +268), the opposite of H1 |
-| 7 Simulation | Done | In the realistic scenario (S5), with no herding: our Wang-Hudson test reports herding in 100% of markets; the standard test is conservative (0.1%) |
-| 7 Check against paper | Done | Our regression is the paper's Equation 3. The paper never addresses the jump at zero. The paper-exact version also reports herding in 100% of no-herding markets, and so does the Huber M-estimator reading. Rerunning the paper's own design with its stated errors gives 100%; its reported 14.4% needs a much smaller error (16.6% with SD = 0.01) |
-| 7 Calibrated test | Done | Calibrated one-sided p for g5: 0.119 (standard), 0.390 (Wang-Hudson) |
-| 7 Standard errors | Done | On truly-zero g5 terms, Newey-West(5) gives 11.8% false alarms (standard) and 51.6% (Wang-Hudson); the block bootstrap gives 4.9% and 17.8%. With the bootstrap, real g5 one-sided p = 0.204 (standard) and 0.071 (Wang-Hudson) |
-| 8 Remaining | To decide | See Step 8 |

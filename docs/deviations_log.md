@@ -391,3 +391,30 @@ Validation first: test_step8.py must pass before any real-data run. It must:
 - recover known effect sizes in basis points from synthetic coefficients;
 - confirm the excluded tickers are absent and the recomputed market equals the manual mean;
 - confirm the GPT-4 Post dummy switches on exactly at 2023-03-14.
+
+**D8: outcome and run notes (2026-11-19, post-run)**
+
+- **Order of commits:**
+  - pre-registration 0b7cd6b (pushed 21:12:53);
+  - code and tests 71c3f35 (pushed 21:14:36, before running; 15/15 validation checks pass);
+  - results 39f805d.
+  - The full-sample CCK g5 reproduces Step 5 exactly. Its bootstrap one-sided p (0.205) matches Part H's 0.204, which used a different seed.
+- **8a Effect size:**
+  - A 2-SD market move is 2.50%.
+  - g5 = −25.0 bp, which is 11.0% of the mean CSAD on such days (226.7 bp, 107 days). Its bootstrap 95% interval is −55.2 to +60.3 bp, so it includes zero.
+  - Under the rule, it is not economically negligible (|g5| ≥ 1 bp), but it is not distinguishable from zero.
+  - Post-minus-pre by entry group: high +5.1 bp, middle +30.1, low −8.4. All three bootstrap intervals include zero.
+  - The percentile interval is not centered on the estimate. The bootstrap distribution is skewed, so the percentile interval was reported as pre-registered.
+- **8b GPT-4 date:**
+  - CCK g5 = −3.95 (bootstrap one-sided p = 0.210; NW5 p = 0.054).
+  - It sits at the 46th percentile of the 84 placebo values (WH: 76th).
+  - Decision: herding does not track the GPT-4 release.
+- **8c Without the seven largest tech companies:**
+  - 21,404 stock-days removed. CCK g5 = −3.94 (bootstrap p = 0.213).
+  - Base herding is unchanged (CCK t = −0.04, WH t = −8.34).
+  - Decision: the result does not depend on these stocks.
+- **8d Liquidity-weighted market:**
+  - CCK g5 = −1.41 (bootstrap p = 0.328).
+  - Decision: the result does not depend on the market weighting.
+- **Holm:** the three CCK bootstrap p-values all have a Holm p of 0.63.
+- **Wang-Hudson** g5 stays negative in every analysis (NW5 p ≤ 0.003; bootstrap p 0.04 to 0.08). It fails H4, so under the plan's decision rule it is not used as evidence.

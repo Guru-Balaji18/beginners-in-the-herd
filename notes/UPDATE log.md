@@ -26,6 +26,19 @@ UPDATE: [one-line title]
 ---
 
 ## 2026-11-19 — Guru (with Claude Code)
+UPDATE: Step 8 analyses run (D8); research plan finalized except one question
+- **What I did:**
+  - Pre-registered D8 and pushed it before any code (`0b7cd6b`).
+  - Wrote `step8_analyses.py` with 15/15 validation checks, then pushed the code before running it (`71c3f35`).
+  - Ran the four analyses (`39f805d`).
+  - Research plan: appendix deleted, research teacher set to Mrs. Kulkarni. CSSD, pairwise correlation, per-stock Google Trends, sup-Wald, international and GARCH are dropped, with reasons.
+- **What the result was:**
+  - Nothing changes the answer. The GPT-4 date, leaving out the 7 largest tech companies and a liquidity-weighted market give CCK bootstrap one-sided p = 0.21 / 0.21 / 0.33.
+  - g5 ≈ −25 bp of dispersion on a 2-SD (2.5%) market day, about 11% of normal, with a 95% interval from −55 to +60 bp.
+- **Any decision made or problem hit:** I chose to drop CSSD and pairwise correlation; Question 2 already compares two tests.
+- **What's next:** ask Mrs. Kulkarni whether to submit a revised plan or an addendum; then the board visuals.
+
+## 2026-11-19 — Guru (with Claude Code)
 UPDATE: Research plan drafted
 - **What I did:** drafted the combined research plan in [[Research Plan draft]], following the original plan's section order.
   - It keeps the original question, rationale and H1–H3 word for word.
