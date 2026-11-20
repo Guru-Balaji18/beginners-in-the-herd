@@ -1,0 +1,94 @@
+{
+ "8a_effect_size": {
+  "sigma_daily_market_return": 0.012514089724064996,
+  "two_sd_move_pct": 2.5028179448129992,
+  "mean_csad_bp_on_2sd_days": 226.709456398442,
+  "n_2sd_days": 107,
+  "g5_bp": -24.979013332989787,
+  "g5_bp_ci95_boot": [
+   -55.188273623373696,
+   60.28357307940881
+  ],
+  "g5_pct_of_mean_csad_on_2sd_days": -11.018072968729262,
+  "post_minus_pre_bp": {
+   "low": -8.406697992116463,
+   "middle": 30.106608289949087,
+   "high": 5.1275949569593005
+  },
+  "post_minus_pre_ci95_boot": {
+   "high": [
+    -13.310520941307699,
+    81.56462257059552
+   ],
+   "middle": [
+    -4.5914166921644295,
+    64.8895397447384
+   ],
+   "low": [
+    -28.03828051694917,
+    17.20111594934538
+   ]
+  },
+  "cells_bp": {
+   "pre/low": -14.350589756722002,
+   "pre/middle": -24.97152178592278,
+   "pre/high": -1.2528069332464644,
+   "post/low": -22.757287748838465,
+   "post/middle": 5.135086504026306,
+   "post/high": 3.874788023712836
+  },
+  "economically_negligible_g5": false,
+  "wh_for_completeness": {
+   "g5_bp": -67.49904795422769,
+   "post_minus_pre_bp": {
+    "low": -54.804123688448314,
+    "middle": 65.56175982298964,
+    "high": -1.9372881312380468
+   }
+  }
+ },
+ "8b_gpt4": {
+  "placebo_percentile_g5": {
+   "cck": 0.4642857142857143,
+   "wh": 0.7619047619047619
+  },
+  "n_placebo": 84,
+  "decision": "herding does not track the GPT-4 release"
+ },
+ "8c_exclude_big_tech": {
+  "tickers_removed": [
+   "AAPL",
+   "MSFT",
+   "GOOGL",
+   "GOOG",
+   "AMZN",
+   "NVDA",
+   "META",
+   "TSLA"
+  ],
+  "stock_days_removed": 21404,
+  "base_herding_t": {
+   "cck_rm2_t": -0.039871089054485276,
+   "wh_rm3_t": -8.337214430388146
+  },
+  "decision": "result does not depend on these stocks"
+ },
+ "8d_liquidity_weighted": {
+  "note": "weights are close x volume, a liquidity proxy, not market cap",
+  "decision": "result does not depend on the market weighting"
+ },
+ "holm_cck_g5_boot": {
+  "8b_gpt4": {
+   "raw_p": 0.2101284461157602,
+   "holm_p": 0.6303853383472806
+  },
+  "8c_exclude_big_tech": {
+   "raw_p": 0.2132044382990274,
+   "holm_p": 0.6303853383472806
+  },
+  "8d_liquidity_weighted": {
+   "raw_p": 0.32807091571011715,
+   "holm_p": 0.6303853383472806
+  }
+ }
+}
