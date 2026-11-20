@@ -93,7 +93,10 @@ Read this first in any new session. Then read the latest entries in
 - **No price floor** (split-adjusted prices make NVDA look like a penny stock).
 - **Never re-clean already-clean data** (it drops the first day twice).
 - **Old snapshots:** pre-2015 BlackRock CSVs add "*" to some tickers, and the 2013–14 snapshots use SEDOL/CUSIP codes, which were resolved by name matching.
-- **Windows DLL policy blocks `statsmodels.api`.** Import `OLS` / `RLM` from their modules directly.
+- **Windows Smart App Control (on) blocks unsigned DLLs with no reputation.** That includes anything pip compiles locally, and the `statsmodels.api` import chain. So:
+  - install packages with `pip install --only-binary=:all: ...` (official wheels only);
+  - import `OLS` / `RLM` from their modules directly.
+  - numpy is 2.3.5 (official wheel) since 2026-11-19.
 - **Robinhood:** keep it in the main index and run a dropped-Robinhood robustness check. Use growth rates, not raw counts. Use the expanding-window cutoffs (no lookahead).
 - **Pre-registration wording:** "primary specification, fixed before examining regression results".
 - **H3 caveats:** survivor tilt from using 2022 data; high-attention stocks have higher betas.

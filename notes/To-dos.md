@@ -15,7 +15,7 @@ it. Back to [[Home]].
 ## Setup
 - [x] Invite Yuvraj as a collaborator on GitHub (see [[How to sync]]) — sent 2026-11-19 to Yuv1s, pending
 - [ ] Yuvraj: clone the repo, open it as a vault, install Obsidian Git
-- [ ] Ask school IT why Application Control now blocks numpy on Guru's laptop (since after 2026-10-21), or pick a computer that isn't managed for running the code
+- [x] Fix the numpy block: Smart App Control was rejecting a locally compiled numpy; fixed with the official 2.3.5 wheel (2026-11-19)
 - [ ] Decide how Yuvraj gets `data/` (759 MB, not in git): rebuild it with the scripts, or Guru shares a zip
 
 ## Research

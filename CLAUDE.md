@@ -40,8 +40,12 @@ each in their own Claude Code sessions.
   while a simulation is still writing to `results/`.
 
 ## Technical notes
-- Windows Application Control blocks `statsmodels.api`. Import from
-  submodules instead, e.g.
+- Windows Smart App Control is on and blocks unsigned DLLs with no
+  reputation. So install Python packages with
+  `pip install --only-binary=:all: ...` and never let pip compile from
+  source; a locally built numpy got blocked on 2026-11-19. It also blocks
+  part of `statsmodels.api`'s import chain, so import from submodules
+  instead, e.g.
   `from statsmodels.regression.linear_model import OLS` or
   `from statsmodels.robust.robust_linear_model import RLM`.
 - Multiprocessing simulations are resumable: they append each finished
