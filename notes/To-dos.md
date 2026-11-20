@@ -25,12 +25,13 @@ it. Back to [[Home]].
 - [ ] Timestamp proof: pushing to GitHub records push times; also consider registering on OSF/AsPredicted or emailing the addenda to Mrs. Kulkarni
 
 ## Board visuals ([[Board figures]])
-- [ ] (a) entry index with High/Low, the ChatGPT date and surges
-- [ ] (b) dispersion curve, pre vs post
-- [ ] (c) g5 forest plot
-- [ ] (d) H3 high/low bars
-- [ ] (e) standard vs Wang-Hudson; existing candidates: `wh_e4_diagnosis.png`, `wh_paper_e5_size.png`
-- [ ] (f) pipeline diagram with callouts
+- [ ] Review the six first drafts together; decide board layout and print size
+- [x] (a) entry index with High/Low, the ChatGPT date and surges (first draft: `results/board/`)
+- [x] (b) dispersion curve, pre vs post (first draft: `results/board/`)
+- [x] (c) g5 forest plot (first draft: `results/board/`)
+- [x] (d) H3 high/low bars (first draft: `results/board/`)
+- [x] (e) standard vs Wang-Hudson (first draft: `results/board/e_false_alarms.png`)
+- [x] (f) pipeline diagram with callouts (first draft: `results/board/`)
 
 ## Dates
 - Hillsborough Regional STEM Fair: **Feb 17, 2027**
