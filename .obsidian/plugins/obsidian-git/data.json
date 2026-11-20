@@ -1,0 +1,7 @@
+{
+  "autoPullOnBoot": true,
+  "autoPullInterval": 10,
+  "autoSaveInterval": 0,
+  "pullBeforePush": true,
+  "syncMethod": "merge"
+}

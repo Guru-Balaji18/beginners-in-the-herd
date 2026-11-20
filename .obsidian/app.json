@@ -1,0 +1,10 @@
+{
+  "userIgnoreFilters": [
+    "data/",
+    "__pycache__/"
+  ],
+  "newFileLocation": "folder",
+  "newFileFolderPath": "notes",
+  "attachmentFolderPath": "notes/attachments",
+  "alwaysUpdateLinks": true
+}
