@@ -26,6 +26,16 @@ UPDATE: [one-line title]
 ---
 
 ## 2026-11-19 — Guru (with Claude Code)
+UPDATE: Research plan drafted
+- **What I did:** drafted the combined research plan in [[Research Plan draft]], following the original plan's section order.
+  - It keeps the original question, rationale and H1–H3 word for word.
+  - It adds a background section: the original plan, what happened, why it was revised, and the new goal and hypothesis.
+  - It adds Question 2 and H4 (can the herding tests be trusted), plus the procedures as actually carried out, the remaining analyses, a who-did-the-work disclosure (we did the research; Claude Code completed it under our direction) and a progress appendix.
+- **What the result was:** every number in the draft was checked against `results/` and `data/`. I also corrected the stale sample sizes in [[Handoff]]: 2,260,838 stock-days, 1,280 stocks, 2,019 members.
+- **Any decision made or problem hit:** the draft is long (about 5,700 words). The appendix is the easiest cut if the fair limits length.
+- **What's next:** resolve the ⚠ items in the draft (revised plan or addendum, teacher name, CSSD, Google Trends, which Step 8 analyses, appendix).
+
+## 2026-11-19 — Guru (with Claude Code)
 UPDATE: Repo on GitHub + shared Obsidian vault set up
 - **What I did:**
   - Rewrote the git history before the first push: all 24 commits are re-authored as Guru-Balaji18, AI co-author trailers are removed, and dates are unchanged. A byte-for-byte check found no content changes except the cited hashes. See [[Commit hash map]].

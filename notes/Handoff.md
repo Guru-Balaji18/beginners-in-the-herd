@@ -42,8 +42,8 @@ Read this first in any new session. Then read the latest entries in
 ## 3. Pipeline status
 | Step | File(s) | Status |
 |---|---|---|
-| Membership | `build_membership.py` → `data/membership.csv` | Done. Russell 1000 from iShares IWB holdings (current BlackRock endpoint). 2,048 tickers, reliable from 2013-01. Known gap: Jan–Jul 2017 is missing from BlackRock's archive. |
-| 1. Return panel | `build_panel.py`, `test_panel.py` | Done: 2,216,818 rows, 1,279 tickers, 664–1,011 active per day. 36 renames fixed (FB→META etc.). |
+| Membership | `build_membership.py` → `data/membership.csv` | Done. Russell 1000 from iShares IWB holdings (current BlackRock endpoint). 2,019 tickers, reliable from 2013-01. Known gap: Jan–Jul 2017 is missing from BlackRock's archive. |
+| 1. Return panel | `build_panel.py`, `test_panel.py` | Done: 2,260,838 stock-days, 1,280 tickers, 2,678 days, 685–1,011 active per day. 36 renames fixed (FB→META etc.). |
 | 2. CSAD | `build_csad.py`, `robustness_wang_hudson.py` | Done. CCK and Wang-Hudson disagree on base herding; Parts B and E explain why. |
 | 3. Entry index | `investor_index.py` | Done (29 checks). |
 | 4. Retail attention | `retail_attention.py` | Done for FINRA and inverse 13F. Per-stock Google Trends is incomplete (23/184 batches). |

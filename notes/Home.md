@@ -17,6 +17,7 @@ Statistics) · Regional STEM Fair **Feb 17, 2027**.
 - [[UPDATE log]]: what happened in each session, newest first
 - [[To-dos]]: open tasks
 - [[How to sync]]: Obsidian + GitHub setup and routine
+- [[Research Plan draft]]: combined research plan (draft, ⚠ items need decisions)
 
 ## Research record (pre-registration trail, `docs/`)
 - [[addendum_2026-09-28]]: Part A, the pre-registration for Parts B–D

@@ -20,7 +20,7 @@ it. Back to [[Home]].
 
 ## Research
 - [ ] Finish or drop the per-stock Google Trends attention data (23/184 batches)
-- [ ] Write the combined, standalone resubmitted research plan (lead: the CCK vs Wang-Hudson story)
+- [ ] Finish the combined research plan: resolve the ⚠ items in [[Research Plan draft]] and ask Mrs. Kulkarni whether to submit a revised plan or the original plus an addendum
 - [ ] Timestamp proof: pushing to GitHub records push times; also consider registering on OSF/AsPredicted or emailing the addenda to Mrs. Kulkarni
 
 ## Board visuals ([[Board figures]])
