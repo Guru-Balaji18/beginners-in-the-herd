@@ -216,7 +216,7 @@ CSAD_t = g0 + g1·|R_m,t| + g2·R_m,t² + g3·R_m,t²·Post_t + g4·R_m,t²·Hig
 2. Check against the source. Compare our Wang-Hudson code line by line with the published paper and quote its exact specification. Build "paper-exact" versions of each test the paper proposes. Rerun the simulation with them, and rerun the paper's own simulation design. The paper's estimator is described only as "robust regression", so test both readings: OLS with heteroskedasticity-robust standard errors, and a Huber M-estimator.
 3. Explain the mechanisms. On single simulated markets, plot dispersion against the market return with each test's fitted curve, to show in plain terms why a test fails when it does.
 4. Simulation-calibrated test. Instead of the textbook cutoff, judge the real t-statistic against its distribution in 2,000 fresh simulated no-herding markets calibrated to our data. Validate on held-out markets, and check how much the answer depends on which scenario the simulation assumes.
-5. **Standard errors.**
+5. Standard errors.
    - Compare Newey-West standard errors (5, 21, 63 and 126 lags) and a 21-day moving-block bootstrap.
    - Check each on simulated markets in which the ChatGPT-date terms are truly zero, counting how often each method calls them "significant".
    - Use the best-calibrated method for the real data.
