@@ -15,6 +15,7 @@ it. Back to [[Home]].
 ## Setup
 - [ ] Invite Yuvraj as a collaborator on GitHub (see [[How to sync]])
 - [ ] Yuvraj: clone the repo, open it as a vault, install Obsidian Git
+- [ ] Ask school IT why Application Control now blocks numpy on Guru's laptop (since after 2026-10-21), or pick a computer that isn't managed for running the code
 - [ ] Decide how Yuvraj gets `data/` (759 MB, not in git): rebuild it with the scripts, or Guru shares a zip
 
 ## Research

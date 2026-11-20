@@ -37,7 +37,8 @@ UPDATE: Repo on GitHub + shared Obsidian vault set up
   - The repo is public, by choice. It includes Guru's SEC contact email in two scripts.
   - Obsidian Git auto-**pulls** (at startup and every 10 min), but commit-and-sync is **manual**, so half-finished code or simulation output never gets committed by accident.
   - `data/` (759 MB) is not in git.
-- **What's next:** invite Yuvraj as a collaborator; then work through [[To-dos]].
+- **Problem hit (not caused by the setup):** on Guru's school-managed laptop, a Windows **Application Control policy now blocks numpy itself** (DLL load failed for `_multiarray_umath`, numpy 2.2.6). It fails from every folder, OneDrive included. It worked on 2026-10-21, so the policy changed since. Until school IT allows it, run the Python code on a computer that isn't managed (e.g. Yuvraj's). Notes and git work fine.
+- **What's next:** invite Yuvraj as a collaborator; ask IT about the numpy block; then work through [[To-dos]].
 
 ## 2026-10-21 — Guru (with Claude Code)
 UPDATE: D7 – the robust-regression reading of Wang-Hudson also fails
